@@ -1,5 +1,4 @@
 {
-  "parser": "@typescript-eslint/parser",
   "env": {
     "browser": true,
     "node": true,
@@ -11,7 +10,8 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended",
     "next"
   ],
   "parserOptions": {
@@ -32,9 +32,19 @@
       }
     }
   },
-  "plugins": ["react", "import", "@typescript-eslint"],
+  "plugins": ["react", "import", "prettier"],
   "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+
+    // React rules
     "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "react/display-name": "off",
+
+    // Import rules
     "import/no-unresolved": ["error", { "commonjs": true, "amd": true }],
     "import/named": "off",
     "import/namespace": "off",
@@ -42,13 +52,12 @@
     "import/export": "off",
     "import/parsers": "off",
     "import/resolver": "off",
+
+    // Other rules
     "no-console": "warn",
     "no-debugger": "off",
     "no-useless-catch": "off",
     "no-unreachable": "off",
-    "react/no-unescaped-entities": "off",
-    "react-hooks/rules-of-hooks": "off",
-    "react-hooks/exhaustive-deps": "off",
     "no-unused-vars": [
       "error",
       {
@@ -59,6 +68,6 @@
     ],
     "no-empty-function": "warn",
     "no-explicit-any": "off",
-    "@next/next/no-img-element": "off",
+    "@next/next/no-img-element": "off"
   }
 }

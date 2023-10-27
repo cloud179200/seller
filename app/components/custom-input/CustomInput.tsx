@@ -1,26 +1,48 @@
-import React, { InputHTMLAttributes } from 'react'
+import React, { InputHTMLAttributes } from "react";
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string,
-  onRightIconClick?: React.MouseEventHandler<HTMLButtonElement>
-  rightIcon?: React.ReactNode,
-  bottomComponent?: React.ReactNode,
+  label?: string;
+  topRightLabel?: string;
+  onEndIconClick?: React.MouseEventHandler<HTMLButtonElement>;
+  endIcon?: React.ReactNode;
+  bottomComponent?: React.ReactNode;
+  error?: boolean;
+  errorMessage?: string;
 }
 
 function CustomInput(props: IProps) {
-  const { label, rightIcon, onRightIconClick, bottomComponent, ...restProps } = props
+  const { label, topRightLabel, endIcon, onEndIconClick, bottomComponent, error, errorMessage, ...restProps } =
+    props;
+  const errorClass = error ? "input-error animate-shake-twice focus:[animation-delay:0.3s]" : "";
   return (
-    <>
-      {label && <label className="mb-2 block text-sm font-bold text-gray-700" >{label}</label>}
-      <input className="w-full rounded-lg border border-gray-300 px-4 py-2 transition-colors duration-300 focus:outline-none focus:ring focus:ring-blue-200" {...restProps} />
-      {rightIcon && <span className="absolute inset-y-0 right-0 flex items-center pr-3">
-        <button className="focus:outline-none" onClick={onRightIconClick}>
-          {rightIcon}
-        </button>
-      </span>}
-      {bottomComponent}
-    </>
-  )
+    <div className="form-control w-full">
+      <label className="label">
+        {label && <span className="label-text font-bold">{label}</span>}
+        {topRightLabel && <span className="label-text-alt">{topRightLabel}</span>}
+      </label>
+      <div className="relative w-full">
+        <input
+          type="text"
+          placeholder="Type here"
+          className={`input-bordered input ${errorClass} w-full`}
+          {...restProps}
+        />
+        {endIcon && (
+          <span className="btn-ghost btn-sm btn-circle btn absolute right-0 top-2 mr-3 flex items-center">
+            <button className="focus:outline-none" onClick={onEndIconClick}>
+              {endIcon}
+            </button>
+          </span>
+        )}
+      </div>
+      {error && errorMessage && <label className="label">
+        <span className="label-text-alt text-rose-600">{errorMessage}</span>
+      </label>}
+      {bottomComponent && <div className="relative mt-4 w-full">
+        {bottomComponent}
+      </div>}
+    </div>
+  );
 }
 
-export default CustomInput
+export default CustomInput;

@@ -25,8 +25,8 @@ export const strengthColor = (count: number) => {
 // password strength indicator
 export const strengthIndicator = (str: string) => {
     let strengths = 0;
-    if (str.length > 5) strengths += 1;
-    if (str.length > 7) strengths += 1;
+    if (str.length > 6) strengths += 1;
+    if (str.length > 12) strengths += 1;
     if (hasNumber(str)) strengths += 1;
     if (hasSpecial(str)) strengths += 1;
     if (hasMixed(str)) strengths += 1;

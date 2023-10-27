@@ -1,22 +1,11 @@
 import React from 'react';
-// material-ui
-import LinearProgress from '@mui/material/LinearProgress';
-import { styled } from '@mui/material/styles';
-
-// styles
-const LoaderWrapper = styled('div')({
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    zIndex: 1301,
-    width: '100%'
-});
+import CustomBox from './custom-box/CustomBox';
 
 // ==============================|| LOADER ||============================== //
 const Loader = () => (
-    <LoaderWrapper>
-        <LinearProgress color="primary" />
-    </LoaderWrapper>
+    <CustomBox className='flex items-center justify-center'>
+        <span className="loading loading-spinner loading-lg"></span>
+    </CustomBox>
 );
 
 export default Loader;

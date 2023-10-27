@@ -1,28 +1,44 @@
-import React, { useState, useMemo } from "react";
+"use client";
+import React, { useState, useMemo, useEffect } from "react";
 import { useFormik } from "formik";
-import { signUpSchema } from "../schema";
-import { NAME_TRANS_EN } from "@/app/config/constant";
+import { signUpSchema } from "../../utils/schema";
+// import { NAME_TRANS_EN } from "@/app/config/constant";
 import {
-  strengthColor,
+  // strengthColor,
   strengthIndicator,
 } from "@/app/utils/password-strength";
 import Link from "next/link";
-import Animate from "@/app/components/extended/Animate";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import moment from "moment";
 import { TbEye, TbEyeOff } from "react-icons/tb";
 import CustomInput from "@/app/components/custom-input/CustomInput";
-const SignUpComponent = () => {
-  const router = useRouter();
+import CustomButton from "@/app/components/custom-button/CustomButton";
+import { NAME_TRANS_EN } from "@/app/config/constant";
 
+const useSignupFormControl = () => {
+  const router = useRouter();
   const maxDate = useMemo(() => moment().subtract(15, "years"), []);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [strength, setStrength] = useState<number>(0);
-  const [level, setLevel] = useState<{ label: string; color: string } | null>(
-    null
-  );
+  // const [level, setLevel] = useState<{ label: string; color: string } | null>(
+  //   null
+  // );
+
+  const changePassword = (value: string) => {
+    const temp = strengthIndicator(value);
+    setStrength(temp);
+    // setLevel(strengthColor(temp));
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -64,6 +80,26 @@ const SignUpComponent = () => {
     },
   });
 
+  const passwordStrengthClass = useMemo(() => {
+    if (strength === 0) {
+      return "border-red-500";
+    } else if (strength <= 1) {
+      return "border-yellow-500";
+    } else if (strength <= 2) {
+      return "border-blue-500";
+    } else if (strength <= 3) {
+      return "border-green-500";
+    } else if (strength <= 4) {
+      return "border-purple-500";
+    }
+  }, [strength]);
+
+  const indicatorPassword = (
+    <div className="absolute flex h-1 w-full flex-nowrap px-4">
+      {Array.from({ length: 5 }, (_, index) => index).map(index => <div key={index + "_"} className={`mx-1 h-full w-1/5 rounded-full border-2 ${strength >= index ? passwordStrengthClass : "border-gray-100"}`}></div>)}
+    </div>
+  );
+
   const {
     errors,
     handleBlur,
@@ -76,71 +112,100 @@ const SignUpComponent = () => {
     setFieldValue,
   } = formik;
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  useEffect(() => {
+    changePassword(values.password)
+  }, [values.password])
 
-  const handleMouseDownPassword = () => {
-    return;
-  };
-  const handleClickShowConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  return {
+    errors,
+    handleBlur,
+    handleChange,
+    isValid,
+    touched,
+    values,
+    isSubmitting,
+    handleSubmit,
+    setFieldValue,
+    showPassword,
+    showConfirmPassword,
+    handleClickShowPassword,
+    handleClickShowConfirmPassword,
+    indicatorPassword
+  }
+}
 
-  const handleMouseDownConfirmPassword = () => {
-    return;
-  };
+const SignUpComponent = () => {
 
-  const changePassword = (value: string) => {
-    const temp = strengthIndicator(value);
-    setStrength(temp);
-    setLevel(strengthColor(temp));
-  };
-
-  const getPasswordStrengthClass = () => {
-    if (strength === 0) {
-      return "";
-    } else if (strength <= 1) {
-      return "border-red-500";
-    } else if (strength <= 2) {
-      return "border-yellow-500";
-    } else if (strength <= 3) {
-      return "border-blue-500";
-    } else if (strength <= 4) {
-      return 'border-green-500';
-    } else {
-      return 'border-purple-500';
-    }
-  };
-
-  const indicatorPassword = (
-    <div className="absolute left-0 bottom-0 h-1 w-full">
-      <div className={`h-full ${getPasswordStrengthClass()}`}></div>
-      <div className={`h-full ${getPasswordStrengthClass()}`}></div>
-      <div className={`h-full ${getPasswordStrengthClass()}`}></div>
-      <div className={`h-full ${getPasswordStrengthClass()}`}></div>
-    </div>
-  );
+  const {
+    errors,
+    handleBlur,
+    handleChange,
+    isValid,
+    touched,
+    values,
+    isSubmitting,
+    handleSubmit,
+    // setFieldValue,
+    showPassword,
+    showConfirmPassword,
+    handleClickShowPassword,
+    handleClickShowConfirmPassword,
+    indicatorPassword
+  } = useSignupFormControl();
 
   return (
     <>
-      <div className="flex min-h-screen flex-wrap">
-        <div className="flex w-full items-center justify-center bg-gray-100 py-16 md:w-2/3">
-          <Animate animateWhenInView>
-            <div className="mx-4 w-full max-w-screen-sm overflow-hidden rounded-lg bg-white shadow-md">
-              <div className="px-6 py-8">
-                <h2 className="mb-4 text-center text-3xl font-bold">Login</h2>
-                <div className="mb-6">
+      <div className="flex min-h-screen flex-wrap overflow-hidden md:overflow-auto">
+        <div className="flex h-screen w-full items-center justify-center bg-gray-100 py-16 md:w-2/3">
+          <form
+            onSubmit={handleSubmit}
+            className="mx-4 w-full max-w-screen-md overflow-hidden rounded-lg bg-white shadow-md md:w-4/5"
+          >
+            <div className="px-6 py-8">
+              <h2 className="mb-4 text-center text-3xl font-bold">{NAME_TRANS_EN.SIGN_IN_TITLE}</h2>
+              <div className="mb-6 grid grid-cols-6 gap-2">
+                <div className="col-span-3">
                   <CustomInput
-                    label="Email"
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 transition-colors duration-300 focus:outline-none focus:ring focus:ring-blue-200"
-                    type="email"
-                    placeholder="Enter your email"
+                    label={NAME_TRANS_EN.FIRST_NAME}
+                    type="text"
+                    placeholder={NAME_TRANS_EN.FIRST_NAME}
+                    name="first_Name"
+                    value={values.first_Name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.first_Name && errors.first_Name)}
+                    errorMessage={errors.first_Name}
                   />
                 </div>
-                <div className="mb-6">
+                <div className="col-span-3">
                   <CustomInput
-                    rightIcon={
+                    label={NAME_TRANS_EN.LAST_NAME}
+                    type="text"
+                    placeholder={NAME_TRANS_EN.LAST_NAME}
+                    name="last_Name"
+                    value={values.last_Name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.last_Name && errors.last_Name)}
+                    errorMessage={errors.last_Name}
+                  />
+                </div>
+                <div className="col-span-6">
+                  <CustomInput
+                    label={NAME_TRANS_EN.EMAIL}
+                    type="email"
+                    placeholder={NAME_TRANS_EN.EMAIL}
+                    name="email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.email && errors.email)}
+                    errorMessage={errors.email}
+                  />
+                </div>
+                <div className="col-span-3">
+                  <CustomInput
+                    endIcon={
                       showPassword ? (
                         <TbEye
                           stroke={"currentColor"}
@@ -155,19 +220,22 @@ const SignUpComponent = () => {
                         />
                       )
                     }
-                    bottomComponent={indicatorPassword}
-                    label="Password"
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 transition-colors duration-300 focus:outline-none focus:ring focus:ring-blue-200"
-                    type="password"
-                    placeholder="Enter your password"
+                    onEndIconClick={handleClickShowPassword}
+                    label={NAME_TRANS_EN.PASSWORD}
+                    type={showPassword ? "text" : "password"}
+                    placeholder={NAME_TRANS_EN.PASSWORD}
                     name="password"
-                    onChange={handleChange}
                     value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.password && errors.password)}
+                    errorMessage={errors.password}
+                    bottomComponent={indicatorPassword}
                   />
                 </div>
-                <div className="mb-6">
+                <div className="col-span-3">
                   <CustomInput
-                    rightIcon={
+                    endIcon={
                       showConfirmPassword ? (
                         <TbEye
                           stroke={"currentColor"}
@@ -182,55 +250,67 @@ const SignUpComponent = () => {
                         />
                       )
                     }
-                    bottomComponent={indicatorPassword}
-                    label="Confirm Password"
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 transition-colors duration-300 focus:outline-none focus:ring focus:ring-blue-200"
-                    type="password"
-                    placeholder="Enter your password"
+                    onEndIconClick={handleClickShowConfirmPassword}
+                    label={NAME_TRANS_EN.CONFIRM_PASSWORD}
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder={NAME_TRANS_EN.CONFIRM_PASSWORD}
                     name="confirm_password"
-                    onChange={handleChange}
                     value={values.confirm_password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.confirm_password && errors.confirm_password)}
+                    errorMessage={errors.confirm_password}
                   />
                 </div>
-                <div className="mb-6 flex items-center justify-between">
-                  <div className="flex items-center">
-                    <input className="mr-1" type="checkbox" />
-                    <label className="text-sm text-gray-700" htmlFor="remember">
-                      Remember me
-                    </label>
-                  </div>
-                  <a
-                    className="text-sm font-bold text-blue-500 hover:underline"
-                    href="#"
-                  >
-                    Forgot Password?
-                  </a>
+                <div className="col-span-6">
+                  <CustomInput
+                    label={NAME_TRANS_EN.PHONE_NUMBER}
+                    type="text"
+                    placeholder={NAME_TRANS_EN.PHONE_NUMBER}
+                    name="phone_number"
+                    value={values.phone_number}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.phone_number && errors.phone_number)}
+                    errorMessage={errors.phone_number}
+                  />
                 </div>
-                <button
-                  className="focus:shadow-outline w-full rounded-lg bg-blue-500 px-4 py-2 font-bold text-white transition-colors duration-300 hover:bg-blue-700 focus:outline-none"
-                  type="button"
-                >
-                  Login
-                </button>
+                {/* <div className="col-span-6">
+                  <CustomInput
+                    label={NAME_TRANS_EN.LAST_NAME}
+                    type="text"
+                    placeholder={NAME_TRANS_EN.LAST_NAME}
+                    name="last_Name"
+                    value={values.last_Name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={Boolean(touched.last_Name && errors.last_Name)}
+                    errorMessage={errors.last_Name}
+                  />
+                </div> */}
               </div>
-              <div className="bg-gray-100 px-6 py-4">
-                <p className="text-sm text-gray-700">
-                  Don't have an account?{" "}
-                  <a
-                    className="font-bold text-blue-500 hover:underline"
-                    href="#"
-                  >
-                    Sign Up
-                  </a>
-                </p>
-              </div>
+              <CustomButton type="submit" loading={isSubmitting} disabled={!isValid}>
+                {NAME_TRANS_EN.SIGN_UP}
+              </CustomButton>
             </div>
-          </Animate>
+            <div className="bg-gray-100 px-6 py-4">
+              <p className="text-sm text-gray-700">
+                {NAME_TRANS_EN.ALREADY_HAVE_ACCOUNT}
+                {" "}
+                <Link
+                  className="font-bold text-blue-500 hover:underline"
+                  href="/auth/login"
+                >
+                  {NAME_TRANS_EN.SIGN_IN}
+                </Link>
+              </p>
+            </div>
+          </form>
         </div>
-        <div className="w-full bg-gray-300 md:w-1/3">
+        <div className="hidden w-full bg-gray-300 md:block md:w-1/3">
           <img
-            className="h-full w-full object-cover"
-            src="image.jpg"
+            className="h-screen w-full object-cover"
+            src="https://i.pinimg.com/564x/0e/93/a2/0e93a2f8b0d20439b075ae3dccfa8e03.jpg"
             alt="Image"
           />
         </div>

@@ -9,9 +9,8 @@ import { BRAND_NAME } from "@/app/config/constant";
 const _callbacks: CallbacksOptions<Profile, Account> = {
   async signIn(params) {
     const { account, profile } = params;
-    console.log({params})
     if (account && profile && account.provider === BRAND_NAME.GOOGLE) {
-      return Boolean(profile?.email_verified && profile?.email?.endsWith("@gmail.com"))
+      return Boolean(profile?.email?.endsWith("@gmail.com"))
     }
     return true
   },

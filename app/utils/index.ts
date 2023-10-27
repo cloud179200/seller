@@ -39,3 +39,13 @@ export const resErrorJson = (message = "Error") => {
     message
   }
 }
+
+export const formatCreditCardNumber = (input: string) => {
+  // Remove non-numeric characters
+  let formattedNumber = input.replace(/\D/g, '');
+
+  // Add spaces after every 4 digits
+  formattedNumber = formattedNumber.replace(/(\d{4})/g, '$1 ');
+
+  return formattedNumber.trim();
+};

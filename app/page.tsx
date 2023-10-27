@@ -1,25 +1,28 @@
 "use client";
-import Animate from "@/app/components/extended/Animate";
 import Link from "next/link";
-import { useAppSelector } from "./redux/store";
 
 export default function Home() {
-  const commonLoading = useAppSelector(state => state.common.loadingCommon)
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">
-      <div className="text-white text-center">
-        <h1 className="text-4xl font-bold mb-4">TailwindCSS</h1>
-        <div className="flex justify-center">
-          <Animate>
-          <Link className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4" href="/auth/login" aria-disabled={commonLoading}>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-cyan-300 via-[#b219fa] to-yellow-400">
+      <div className="text-center text-white">
+        <h1 className="mb-4 text-4xl font-bold">TailwindCSS - DaisyUI</h1>
+        <div className="mb-6 grid grid-cols-2 gap-2">
+          <div className="col-span-2 md:col-span-1">
+            <Link
+              href="/auth/login"
+              className="btn-info btn-wide btn mx-2"
+            >
               Login
-          </Link>
-          </Animate>
-          <Animate>
-          <Link className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" href="/auth/register" aria-disabled={commonLoading}>
+            </Link>
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <Link
+              href="/auth/register"
+              className="btn-secondary btn-wide btn mx-2"
+            >
               Register
-          </Link>
-          </Animate>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

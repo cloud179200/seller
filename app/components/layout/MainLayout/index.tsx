@@ -1,5 +1,5 @@
 import React from 'react'
-import MainLayout from './MainLayoutClient'
+import MainLayout from './MainLayout'
 
 function Component({ children }: { children?: React.ReactNode }) {
   return (

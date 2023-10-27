@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react'
 import { NEXT_AUTH_STATUS } from '@/app/config/constant'
 import CustomBox from '@/app/components/custom-box/CustomBox'
-const LoadingComponent = dynamic(() => import('@/app/components/Loading')) 
+const LoadingComponent = dynamic(() => import('@/app/components/Loading'))
 
 const page = () => {
 
@@ -28,7 +28,9 @@ const page = () => {
   }
 
   return <CustomBox>
-    {render()}
+    <div className="p-4">
+      {render()}
+    </div>
   </CustomBox>
 }
 

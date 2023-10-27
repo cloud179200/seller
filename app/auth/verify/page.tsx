@@ -74,15 +74,15 @@ function Verify() {
   }
 
   return (
-    <div className="flex min-h-screen flex-wrap justify-center items-center">
+    <div className="flex min-h-screen flex-wrap items-center justify-center">
       <img src={statusContent.image.src} width="20%" alt="status" />
-      <h3 className="font-bold mb-2 text-center text-black">
+      <h3 className="mb-2 text-center font-bold text-black">
         {statusContent.content}
       </h3>
       {statusContent.content !== STATUS_VERIFY_EMAIL.SENT && (
         <Animate>
           <Link
-            className="focus:shadow-outline w-full rounded-lg bg-blue-500 px-4 py-2 font-bold text-white transition-colors duration-300 hover:bg-blue-700 focus:outline-none"
+            className="w-full rounded-lg bg-blue-500 px-4 py-2 font-bold text-white transition-colors duration-300 hover:bg-blue-700 focus:shadow-lg focus:outline-none"
             type="button"
             href="/auth/login"
           >

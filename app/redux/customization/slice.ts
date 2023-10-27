@@ -15,7 +15,7 @@ const initialState: ICustomizationState = {
   fontFamily: `'Quicksand', sans-serif`,
   borderRadius: 14,
   calendarView: "month",
-  opened: true,
+  opened: false,
 }
 const customizationSlice = createSlice({
   name: "customization",
@@ -43,4 +43,4 @@ const customizationSlice = createSlice({
 export const customizationActions = customizationSlice.actions;
 export const customizationActionsName = actionTypes;
 
-export default customizationSlice.reducer;
+export default customizationSlice;

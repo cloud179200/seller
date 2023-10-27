@@ -28,7 +28,6 @@ const Logo = () => {
       wrapperStyle={{}}
       wrapperClass="comment-wrapper"
       color="#fff"
-      className="bg-"
     />
   );
 };

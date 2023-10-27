@@ -41,4 +41,4 @@ const utilsSlice = createSlice({
 export const utilsActions = utilsSlice.actions;
 export const utilsActionsName = actionTypes;
 
-export default utilsSlice.reducer;
+export default utilsSlice;

@@ -61,7 +61,7 @@ export default async function handler(
       const user = await prisma.user.create({
         data: newUserData,
       });
-      console.log({ user });
+
       if (!user) {
         throw new Error("Create user failed");
       }
@@ -69,7 +69,7 @@ export default async function handler(
       const verificationToken = await prisma.verificationToken.create({
         data: newVerifitionData
       })
-      console.log({ verificationToken });
+
       if (!verificationToken) {
         throw new Error("Create verification token failed");
       }

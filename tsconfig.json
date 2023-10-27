@@ -27,7 +27,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
+    ".next/types/**/*.ts", "app/components/layout/MainLayout/Sidebar/NavCollapse/index.sth",
   ],
   "exclude": ["node_modules"]
 }

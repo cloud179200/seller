@@ -1,83 +1,25 @@
 "use client"
 import React from 'react';
-
-// material-ui
-import { useTheme } from '@mui/material/styles';
-import { Box, Drawer, useMediaQuery } from '@mui/material';
-
 // third-party
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { BrowserView, MobileView } from 'react-device-detect';
 
 // project imports
 import MenuList from './MenuList';
-import LogoSection from '../LogoSection';
-import { drawerWidth } from '@/app/redux/customization/constant';
 
-// ==============================|| SIDEBAR DRAWER ||============================== //
 interface IProps {
-    drawerOpen: boolean,
-    drawerToggle: () => void,
-    window?: any 
+    open: boolean;
+    window?: any
 }
-const Sidebar = ({ drawerOpen, drawerToggle, window }: IProps) => {
-    const theme: any = useTheme();
-    const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
-
-    const drawer = (
-        <>
-            <Box sx={{ display: { xs: 'block', md: 'none' } }}>
-                <Box sx={{ display: 'flex', p: 2, mx: 'auto' }}>
-                    <LogoSection />
-                </Box>
-            </Box>
-            <BrowserView>
-                <PerfectScrollbar
-                    component="div"
-                    style={{
-                        height: !matchUpMd ? 'calc(100vh - 56px)' : 'calc(100vh - 88px)',
-                        paddingLeft: '16px',
-                        paddingRight: '16px'
-                    }}
-                >
-                    <MenuList />
-                </PerfectScrollbar>
-            </BrowserView>
-            <MobileView>
-                <Box sx={{ px: 2 }}>
-                    <MenuList />
-                </Box>
-            </MobileView>
-        </>
-    );
-
-    const container = window !== undefined ? () => window.document.body : undefined;
-
+const Sidebar = (props: IProps) => {
+    const { open } = props;
+    const openClass = "w-[85vw] sm:w-64 p-0 md:p-2 absolute md:static z-40 md:z-10"
+    const notOpenClass = "w-0 md:w-16 p-0 md:p-2 absolute md:static z-40 md:z-10"
+    const extendClass = open ? openClass : notOpenClass
     return (
-        <Box component="nav" sx={{ flexShrink: { md: 0 }, width: matchUpMd ? drawerWidth : 'auto' }} aria-label="mailbox folders">
-            <Drawer
-                container={container}
-                variant={matchUpMd ? 'persistent' : 'temporary'}
-                anchor="left"
-                open={drawerOpen}
-                onClose={drawerToggle}
-                sx={{
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        background: theme.palette.background.default,
-                        color: theme.palette.text.primary,
-                        borderRight: 'none',
-                        [theme.breakpoints.up('md')]: {
-                            top: '88px'
-                        }
-                    }
-                }}
-                ModalProps={{ keepMounted: true }}
-                color="inherit"
-            >
-                {drawer}
-            </Drawer>
-        </Box>
+        <>
+            <ul className={`menu h-full rounded-r-xl bg-base-200 shadow-sm transition-[width] duration-100 ${extendClass}`}>
+                <MenuList isMinimal={!open} />
+            </ul>
+        </>
     );
 };
 

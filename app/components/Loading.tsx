@@ -8,7 +8,7 @@ const LoadingComponent = ({ isModal = false, height = "100vh" }) => {
   const { status } = useSession();
   return (
     <div
-      className={`flex justify-center items-center w-full`}
+      className={`flex w-full items-center justify-center`}
       style={{ height: isModal ? "30vh" : height }}
     >
       {status === NEXT_AUTH_STATUS.AUTHENTICATED ? (

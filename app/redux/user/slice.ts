@@ -25,4 +25,4 @@ const userSlice = createSlice({
 export const userActions = userSlice.actions;
 export const userActionsName = actionTypes;
 
-export default userSlice.reducer;
+export default userSlice;

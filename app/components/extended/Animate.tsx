@@ -1,6 +1,6 @@
 "use client"
 import React, { forwardRef } from "react";
-import { motion, useCycle } from "framer-motion";
+import { HTMLMotionProps, motion, useCycle } from "framer-motion";
 
 interface IProps {
   children?: React.ReactNode;
@@ -8,9 +8,45 @@ interface IProps {
   type?: "slide" | "scale" | "rotate";
   direction?: "up" | "down" | "left" | "right";
   scale?: number | { hover: number, tap: number };
-  animateWhenInView?: boolean;
+  animateWhenInView?: boolean | "slide";
+  animateWhenInViewProps?: HTMLMotionProps<"div">
 }
-const Animate = forwardRef<any, IProps>(({ type = "scale", offset = 10, direction = "right", scale = { hover: 1, tap: 0.8 }, animateWhenInView, children }, ref) => {
+const Animate = forwardRef<any, IProps>(({ type = "scale", offset = 10, direction = "right", scale = { hover: 1, tap: 0.8 }, animateWhenInView, children, animateWhenInViewProps = {} }, ref) => {
+  switch (animateWhenInView) {
+    case true:
+      return <motion.div
+        ref={ref}
+        initial={{
+          opacity: 0,
+          scale: 0.5
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+        }}
+        {...animateWhenInViewProps}
+      >
+        {children}
+      </motion.div >
+      break;
+    case "slide":
+      return <motion.div
+        ref={ref}
+        initial={{
+          opacity: 0,
+          x: -100
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+        {...animateWhenInViewProps}
+      >
+        {children}
+      </motion.div >
+    default:
+      break;
+  }
   let offset1;
   let offset2;
   switch (direction) {
@@ -33,21 +69,6 @@ const Animate = forwardRef<any, IProps>(({ type = "scale", offset = 10, directio
   //   initial: { opacity: 0 },
   //   whileInView: { opacity: 1 }
   // } : {}
-  if (animateWhenInView) {
-    return <motion.div
-      ref={ref}
-      initial={{
-        opacity: 0,
-        scale: 0.5
-      }}
-      animate={{
-        opacity: 1,
-        scale: 1
-      }}
-    >
-      {children}
-    </motion.div >
-  }
   switch (type) {
     case "rotate":
       return (
@@ -85,7 +106,6 @@ const Animate = forwardRef<any, IProps>(({ type = "scale", offset = 10, directio
           animate={{ x: x !== undefined ? x : "" }}
           onHoverEnd={() => cycleX()}
           onHoverStart={() => cycleX()}
-
         >
           {children}
         </motion.div>

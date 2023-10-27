@@ -5,7 +5,7 @@ import { IconType } from "react-icons";
 export interface IListMenu {
   id: string;
   title: string;
-  type: string;
+  type: "item" | "group";
   icon?: IconType;
   caption?: string;
   children?: IListMenuChildren[];

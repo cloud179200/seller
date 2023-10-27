@@ -1,7 +1,8 @@
+"use client"
 import React from "react";
 import { store } from "@/app/redux/store";
 import { Provider } from "react-redux";
-import RouteHandler from "./RouteHandler";
+import RouteHandler from "@/app/providers/RouteHandler";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import { Toaster } from "react-hot-toast";
@@ -18,10 +19,10 @@ function CustomProviders({
     <>
       <SessionProvider session={session} refetchOnWindowFocus>
         <Provider store={store}>
+          <div>
+            <Toaster containerClassName="z-50" />
+          </div>
           <RouteHandler>
-            <div>
-              <Toaster />
-            </div>
             {children}
           </RouteHandler>
         </Provider>

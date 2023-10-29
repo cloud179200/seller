@@ -21,13 +21,14 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["cypress", "node", "./cypress/support"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts", "app/components/layout/MainLayout/Sidebar/NavCollapse/index.sth",
+    ".next/types/**/*.ts", "app/components/layout/MainLayout/Sidebar/NavCollapse/index.sth", "cypress/e2e/auth.cy.ts",
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }

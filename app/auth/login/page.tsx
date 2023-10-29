@@ -128,6 +128,7 @@ const SignInComponent = () => {
                     error={Boolean(touched.email && errors.email)}
                     errorMessage={errors.email}
                     disabled={isSubmitting}
+                    cypressData="email"
                   />
                 </div>
                 <div className="mb-6">
@@ -158,7 +159,8 @@ const SignInComponent = () => {
                     error={Boolean(touched.password && errors.password)}
                     errorMessage={errors.password}
                     disabled={isSubmitting}
-                  />
+                    cypressData="password"
+                    />
                 </div>
                 {/* <div className="mb-6 flex items-center justify-between">
                   <div className="form-control">
@@ -174,7 +176,7 @@ const SignInComponent = () => {
                     Forgot Password?
                   </Link>
                 </div> */}
-                <CustomButton type="submit" loading={isSubmitting} disabled={!isValid}>
+                <CustomButton type="submit" cypressData="login-button-default" loading={isSubmitting} disabled={!isValid}>
                   {NAME_TRANS_EN.SIGN_IN}
                 </CustomButton>
                 <CustomButton
@@ -182,6 +184,7 @@ const SignInComponent = () => {
                   type="button"
                   onClick={handleGoogleLogin}
                   disabled={isSubmitting}
+                  cypressData="login-button-google"
                 >
                   {NAME_TRANS_EN.SIGN_IN_WITH_GOOGLE}
 
@@ -201,7 +204,6 @@ const SignInComponent = () => {
                     href="/auth/register"
                   >
                     {NAME_TRANS_EN.SIGN_UP}
-
                   </Link>
                 </p>
               </div>

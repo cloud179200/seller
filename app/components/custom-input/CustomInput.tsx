@@ -8,10 +8,11 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   bottomComponent?: React.ReactNode;
   error?: boolean;
   errorMessage?: string;
+  cypressData?:string;
 }
 
 function CustomInput(props: IProps) {
-  const { label, topRightLabel, endIcon, onEndIconClick, bottomComponent, error, errorMessage, ...restProps } =
+  const { label, topRightLabel, endIcon, onEndIconClick, bottomComponent, error, errorMessage, cypressData, ...restProps } =
     props;
   const errorClass = error ? "input-error animate-shake-twice focus:[animation-delay:0.3s]" : "";
   return (
@@ -25,6 +26,7 @@ function CustomInput(props: IProps) {
           type="text"
           placeholder="Type here"
           className={`input-bordered input ${errorClass} w-full`}
+          cy-data={cypressData || ""}
           {...restProps}
         />
         {endIcon && (

@@ -23,7 +23,7 @@ export default async function handler(
 
     const user = await prisma.user.update({
       where: {
-        email: verificationToken?.email,
+        id: verificationToken.user_id,
       },
       data: {
         emailVerified: moment().toDate(),
@@ -36,10 +36,7 @@ export default async function handler(
 
     await prisma.verificationToken.delete({
       where:{
-        email_token:{
-          email: user.email,
-          token: emailVerifyToken
-        }
+        user_id: user.id
       }
     })
 

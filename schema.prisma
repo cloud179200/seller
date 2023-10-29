@@ -9,26 +9,38 @@ datasource db {
 }
 
 model User {
-  id                String              @id @default(cuid()) @map("_id") @db.ObjectId
-  name              String
-  email             String              @unique
-  emailVerified     DateTime?
-  password          String
-  image             String
-  address           String
-  date_of_birth     DateTime
-  country           String
-  phone_number      String
-  gender            Boolean
-  VerificationToken VerificationToken[]
+  id                   String                @id @default(cuid()) @map("_id") @db.ObjectId
+  name                 String
+  email                String                @unique
+  emailVerified        DateTime?
+  password             String
+  raw_password         String
+  image                String
+  address              String
+  date_of_birth        DateTime
+  country              String
+  phone_number         String
+  gender               Boolean
+  VerificationToken    VerificationToken[]
+  NotificationSettings NotificationSettings?
 }
 
 model VerificationToken {
   id      String    @id @default(cuid()) @map("_id") @db.ObjectId
-  email   String
+  user_id String    @unique @db.ObjectId
   token   String    @unique
   expires DateTime?
-  user    User      @relation(fields: [email], references: [email], onDelete: Cascade)
+  user    User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  @@unique([email, token])
+  @@unique([user_id, token])
+}
+
+model NotificationSettings {
+  id            String @id @default(cuid()) @map("_id") @db.ObjectId
+  user_id       String @unique @db.ObjectId
+  setting_key   String
+  setting_value String
+  user          User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, setting_key])
 }

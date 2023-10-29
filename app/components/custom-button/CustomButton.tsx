@@ -3,14 +3,16 @@ import React, { ButtonHTMLAttributes } from "react";
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   endIcon?: React.ReactNode;
   loading?: boolean;
+  cypressData?: string;
 }
 
-const CustomButton = ({ children, endIcon, loading, ...props }: IProps) => {
+const CustomButton = ({ children, endIcon, loading, cypressData, ...props }: IProps) => {
   return (
     <button
       className="btn-info btn-block btn mt-2"
       {...props}
       disabled={props.disabled || loading}
+      cy-data={cypressData || ""}
     >
       {children}
       {endIcon && !loading && <span className="ml-2">{endIcon}</span>}

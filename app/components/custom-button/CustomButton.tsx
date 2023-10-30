@@ -12,7 +12,7 @@ const CustomButton = ({ children, endIcon, loading, cypressData, ...props }: IPr
       className="btn-info btn-block btn mt-2"
       {...props}
       disabled={props.disabled || loading}
-      cy-data={cypressData || ""}
+      data-cy={cypressData || ""}
     >
       {children}
       {endIcon && !loading && <span className="ml-2">{endIcon}</span>}

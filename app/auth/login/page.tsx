@@ -176,7 +176,7 @@ const SignInComponent = () => {
                     Forgot Password?
                   </Link>
                 </div> */}
-                <CustomButton type="submit" cypressData="login-button-default" loading={isSubmitting} disabled={!isValid}>
+                <CustomButton type="submit" cypressData="button-login-default" loading={isSubmitting} disabled={!isValid}>
                   {NAME_TRANS_EN.SIGN_IN}
                 </CustomButton>
                 <CustomButton

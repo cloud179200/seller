@@ -8,7 +8,7 @@
     "build": "npx tailwindcss --input ./app/assets/css/input.css --output ./app/assets/css/output.css --minify && npx prisma generate --schema=./schema.prisma && next build",
     "start": "next start",
     "lint": "next lint",
-    "cypress:start-test-e2e": "concurrently \"tailwindcss --input ./app/assets/css/input.css --output ./app/assets/css/output.css --watch\" \"start http://localhost:3000\" \"next dev -p 3000\" \"cypress run --config-file ./cypress.config.ts --e2e\"",
+    "cypress:start-test-e2e": "concurrently \"npm run dev\" \"cypress open --config-file ./cypress.config.ts --e2e\"",
     "cypress:open": "cypress open"
   },
   "dependencies": {

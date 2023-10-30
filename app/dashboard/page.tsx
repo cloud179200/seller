@@ -15,7 +15,7 @@ const page = () => {
     if (NEXT_AUTH_STATUS.AUTHENTICATED === status) {
       return (
         <>
-          <div>Signed in with {data?.user?.email} </div>
+          <div data-cy="email-display">Signed in with {data?.user?.email} </div>
         </>
       )
     }

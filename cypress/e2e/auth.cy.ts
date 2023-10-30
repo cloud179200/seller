@@ -1,48 +1,56 @@
-import {it, describe} from "cypress"
-// Define a custom type for the login credentials
-export interface LoginCredentials {
-  username: string;
-  password: string;
-};
-
-
-// describe block groups related tests together
 describe('Login', () => {
 
-  // beforeEach runs before each test in the describe block
   beforeEach(() => {
-    // visit the login page
     cy.visit('/auth/login');
   });
 
-  // it block defines a single test
   it('should login with valid credentials', () => {
-    // create a valid login credentials object
-    const validCredentials: LoginCredentials = {
-      username: 'username',
-      password: 'password',
+    const validCredentials = {
+      email: 'test@gmail.com',
+      password: '123456',
+    };
+    // login with the valid credentials
+    cy.get('[data-cy="email"]').type(validCredentials.email)
+    cy.get('[data-cy="password"]').type(validCredentials.password)
+    cy.get('[data-cy="button-login-default"]').click();
+    // assert that the user is logged in
+    cy.url().should('not.include', '/auth/login');
+    cy.get('[data-cy="email-display"]').should('contain', validCredentials.email);
+  });
+
+  it('should logout', () => {
+    const validCredentials = {
+      email: 'test@gmail.com',
+      password: '123456',
+    };
+    // login with the valid credentials
+    cy.get('[data-cy="email"]').type(validCredentials.email)
+    cy.get('[data-cy="password"]').type(validCredentials.password)
+    cy.get('[data-cy="button-login-default"]').click();
+    // assert that the user is logged in
+    cy.url().should('not.include', '/auth/login');
+    cy.get('[data-cy="email-display"]').should('contain', validCredentials.email);
+    
+    cy.url().should('include', '/dashboard');
+    cy.get('[data-cy="menu-button"]').click();
+    cy.get('[data-cy="logout-button"]').click();
+    cy.url().should('include', '/auth/login');
+  });
+
+
+  it('should login with invalid credentials', () => {
+    const invalidCredentials = {
+      email: 'test@gmail.com',
+      password: '1234567',
     };
 
     // login with the valid credentials
-    cy.login(validCredentials);
-
+    cy.get('[data-cy="email"]').type(invalidCredentials.email)
+    cy.get('[data-cy="password"]').type(invalidCredentials.password)
+    cy.get('[data-cy="button-login-default"]').click();
     // assert that the user is logged in
-    cy.url().should('not.include', '/auth/login');
-    cy.get('[cy-data="username-display"]').should('contain', 'username');
-  });
-
-  it('should not login with invalid credentials', () => {
-    // create an invalid login credentials object
-    const invalidCredentials: LoginCredentials = {
-      username: 'invalid-username',
-      password: 'invalid-password',
-    };
-
-    // login with the invalid credentials
-    cy.login(invalidCredentials);
-
-    // assert that the user is not logged in
-    cy.url().should('include', '/login');
-    cy.get('[data-testid="username-display"]').should('not.exist');
+    cy.url().should('include', '/auth/login');
+    cy.intercept('POST', '/api/auth/callback/credentials?').as("unauthorizedCallback")
+    cy.wait('@unauthorizedCallback').its('response.statusCode').should('eq', 401)
   });
 });

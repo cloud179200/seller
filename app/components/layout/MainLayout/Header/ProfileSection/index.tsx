@@ -41,7 +41,7 @@ const ProfileSection = () => {
     <>
       {/* Avatar and dropdown */}
       <div className="dropdown-end dropdown">
-        <label tabIndex={MENU_INDEX} className="btn-ghost btn-circle avatar btn">
+        <label data-cy="menu-button" tabIndex={MENU_INDEX} className="btn-ghost btn-circle avatar btn">
           <div className="w-10 rounded-full">
             <img src={avatarURL} title="avatar" alt="avatar"/>
           </div>
@@ -56,7 +56,7 @@ const ProfileSection = () => {
               <TbSettings className="h-5 w-5" />&nbsp;Settings
             </Link></li>
           <li className="my-1">
-            <span onClick={handleLogout}><TbLogout className="h-5 w-5" />&nbsp;Logout</span></li>
+            <span data-cy="logout-button" onClick={handleLogout}><TbLogout className="h-5 w-5" />&nbsp;Logout</span></li>
         </ul>
       </div>
     </>

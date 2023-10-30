@@ -26,7 +26,7 @@ function CustomInput(props: IProps) {
           type="text"
           placeholder="Type here"
           className={`input-bordered input ${errorClass} w-full`}
-          cy-data={cypressData || ""}
+          data-cy={cypressData || ""}
           {...restProps}
         />
         {endIcon && (

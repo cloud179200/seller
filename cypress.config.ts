@@ -3,6 +3,7 @@ import { defineConfig } from 'cypress';
 
 const { combinedEnv } = loadEnvConfig(process.cwd());
 export default defineConfig({
+  projectId: "myj8ut",
   env: combinedEnv,
   e2e: {
     baseUrl: 'http://localhost:3000',

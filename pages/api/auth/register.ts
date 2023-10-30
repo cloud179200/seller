@@ -8,6 +8,9 @@ import moment from "moment";
 import { User, VerificationToken } from "@prisma/client";
 import { sendEmail } from "@/app/utils/email";
 import config from "@/app/config";
+import { TESTING } from "@/app/config/constant";
+
+const TEST_EMAIL = "test@gmail.com"
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,7 +28,54 @@ export default async function handler(
     gender,
   } = req.body;
 
-  const exists = await prisma.user.findUnique({
+
+  const isTesting = email === TESTING.EMAIL;
+
+  if (isTesting) {
+    try {
+      const testingUser = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+
+      if (!testingUser) {
+        throw new Error("Create user failed");
+      }
+      
+      await prisma.verificationToken.deleteMany({
+        where: {
+          user_id: testingUser.id
+        },
+      });
+
+      const testingEmailVerifyToken = await getHashedString(
+        email + password
+      );
+      
+      const newTestingVerificationData: VerificationToken = {
+        id: new ObjectId().toString(),
+        token: testingEmailVerifyToken,
+        user_id: "",
+        expires: null
+      }
+
+      const verificationToken = await prisma.verificationToken.create({
+        data: { ...newTestingVerificationData, user_id: testingUser.id }
+      })
+  
+      if (!verificationToken) {
+        throw new Error("Create verification token failed");
+      }
+
+      res.status(200).json(testingUser)
+    } catch (error: any) {
+      res.status(500).send(resErrorJson(error.toString()));
+    }
+    return
+  }
+
+  const exists = isTesting ? false : await prisma.user.findUnique({
     where: {
       email,
     },
@@ -38,15 +88,16 @@ export default async function handler(
 
   const dobMomentObject = moment(date_of_birth);
 
-  if(!dobMomentObject.isValid()){
-    res.status(400).send("Invalid Date");   
+  if (!dobMomentObject.isValid()) {
+    res.status(400).send("Invalid Date");
+    return
   }
-  
+
   const emailVerifyToken = await getHashedString(
     email + password + moment().toISOString()
   );
   const hashedPassword = await getHashedString(password)
-  
+
   const newUserData: User = {
     id: new ObjectId().toString(),
     name: [first_Name.trim(), last_Name.trim()].join(" "),

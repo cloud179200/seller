@@ -1,3 +1,5 @@
+import { NAME_TRANS_EN } from '../../app/config/constant';
+
 describe('Login', () => {
 
   beforeEach(() => {
@@ -49,8 +51,40 @@ describe('Login', () => {
     cy.get('[data-cy="password"]').type(invalidCredentials.password)
     cy.get('[data-cy="button-login-default"]').click();
     // assert that the user is logged in
-    cy.url().should('include', '/auth/login');
     cy.intercept('POST', '/api/auth/callback/credentials?').as("unauthorizedCallback")
     cy.wait('@unauthorizedCallback').its('response.statusCode').should('eq', 401)
+    cy.url().should('include', '/auth/login');
+  });
+});
+
+describe('Register', () => {
+
+  before(() => {
+    cy.visit('/auth/register');
+  });
+
+  it('should request register with success', () => {
+    const registerBody = {
+      firstName: 'le',
+      lastName: 'viet anh',
+      email: 'test@gmail.com',
+      password: '123456',
+      phoneNumber: "0394252608"
+    };
+    cy.get('[data-cy="first-name"]').type(registerBody.firstName)
+    cy.get('[data-cy="last-name"]').type(registerBody.lastName)
+    cy.get('[data-cy="email"]').type(registerBody.email)
+    cy.get('[data-cy="password"]').type(registerBody.password)
+    cy.get('[data-cy="confirm-password"]').type(registerBody.password)
+    cy.get('[data-cy="phone-number"]').type(registerBody.phoneNumber)
+    cy.get('[data-cy="button-register-default"]').click();
+
+    cy.url({ timeout: 30000 }).should('include', '/auth/verify');
+    cy.get('[data-cy="verify-message"]').should('contain', NAME_TRANS_EN.CHECK_EMAIL_FOR_VERIFY);
+  });
+
+  it('should verify email success', () => {
+    cy.visit("/auth/verify?emailVerifyToken=test")
+    cy.get('[data-cy="verify-message"]').should('contain', NAME_TRANS_EN.VERIFY_EMAIL_SUCCESS);
   });
 });

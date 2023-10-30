@@ -197,3 +197,8 @@ export const NEXT_AUTH_STATUS = {
 export const BRAND_NAME = {
   GOOGLE: "google"
 }
+
+export const TESTING = {
+  EMAIL: "test@gmail.com",
+  EMAIL_VERIFY_TOKEN: "test"
+}

@@ -175,6 +175,7 @@ const SignUpComponent = () => {
                     onBlur={handleBlur}
                     error={Boolean(touched.first_Name && errors.first_Name)}
                     errorMessage={errors.first_Name}
+                    cypressData="first-name"
                   />
                 </div>
                 <div className="col-span-3">
@@ -188,6 +189,7 @@ const SignUpComponent = () => {
                     onBlur={handleBlur}
                     error={Boolean(touched.last_Name && errors.last_Name)}
                     errorMessage={errors.last_Name}
+                    cypressData="last-name"
                   />
                 </div>
                 <div className="col-span-6">
@@ -201,6 +203,7 @@ const SignUpComponent = () => {
                     onBlur={handleBlur}
                     error={Boolean(touched.email && errors.email)}
                     errorMessage={errors.email}
+                    cypressData="email"
                   />
                 </div>
                 <div className="col-span-3">
@@ -231,6 +234,7 @@ const SignUpComponent = () => {
                     error={Boolean(touched.password && errors.password)}
                     errorMessage={errors.password}
                     bottomComponent={indicatorPassword}
+                    cypressData="password"
                   />
                 </div>
                 <div className="col-span-3">
@@ -260,6 +264,7 @@ const SignUpComponent = () => {
                     onBlur={handleBlur}
                     error={Boolean(touched.confirm_password && errors.confirm_password)}
                     errorMessage={errors.confirm_password}
+                    cypressData="confirm-password"
                   />
                 </div>
                 <div className="col-span-6">
@@ -273,6 +278,7 @@ const SignUpComponent = () => {
                     onBlur={handleBlur}
                     error={Boolean(touched.phone_number && errors.phone_number)}
                     errorMessage={errors.phone_number}
+                    cypressData="phone-number"
                   />
                 </div>
                 {/* <div className="col-span-6">
@@ -289,7 +295,7 @@ const SignUpComponent = () => {
                   />
                 </div> */}
               </div>
-              <CustomButton type="submit" loading={isSubmitting} disabled={!isValid}>
+              <CustomButton type="submit" cypressData="button-register-default" loading={isSubmitting} disabled={!isValid}>
                 {NAME_TRANS_EN.SIGN_UP}
               </CustomButton>
             </div>

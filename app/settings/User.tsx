@@ -7,9 +7,12 @@ import { useFormik } from "formik";
 import { changePasswordSchema } from "../utils/schema";
 import { strengthIndicator } from "../utils/password-strength";
 import CustomInput from "../components/custom-input/CustomInput";
-import { NAME_TRANS_EN } from "../config/constant";
+import { API_MESSAGE, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "../config/constant";
 import { TbEye, TbEyeOff } from "react-icons/tb";
 import CustomButton from "../components/custom-button/CustomButton";
+import toast from "react-hot-toast";
+import Lottie from "lottie-react";
+import tickIOS from "@/app/assets/lottie/tick-ios.json";
 
 const useChangePasswordFormControl = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -26,8 +29,26 @@ const useChangePasswordFormControl = () => {
     validationSchema: changePasswordSchema,
     onSubmit: async (_values, formikHelpers) => {
       formikHelpers.setSubmitting(true);
-
+      const result = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          old_password: _values.old_password,
+          new_password: _values.new_password,
+        }),
+      });
       formikHelpers.setSubmitting(false);
+      if(result.status === HTTP_RESPONSE_STATUS.OK){
+        toast(API_MESSAGE.UPDATE_SUCCESS, {
+          className: "font-medium",
+          icon: <Lottie className="h-8 w-8" animationData={tickIOS} initialSegment={[14, 28]} />,
+          duration: 1500
+        });
+        return;
+      }
+      toast.error(await result.text());
     },
   });
 
@@ -159,6 +180,7 @@ const ChangePasswordForm = () => {
           onBlur={handleBlur}
           error={Boolean(touched.old_password && errors.old_password)}
           errorMessage={errors.old_password}
+          cypressData="old_password"
         />{" "}
       </div>{" "}
       <div className="col-span-6">
@@ -190,6 +212,7 @@ const ChangePasswordForm = () => {
           error={Boolean(touched.new_password && errors.new_password)}
           errorMessage={errors.new_password}
           bottomComponent={touched.new_password && indicatorPassword}
+          cypressData="new_password"
         />{" "}
       </div>{" "}
       <div className="col-span-6">
@@ -222,10 +245,11 @@ const ChangePasswordForm = () => {
             touched.confirm_new_password && errors.confirm_new_password
           )}
           errorMessage={errors.confirm_new_password}
+          cypressData="confirm_new_password"
         />{" "}
       </div>{" "}
       <div className="col-start-3 col-end-5 flex items-center justify-center">
-        <CustomButton type="submit" loading={isSubmitting} disabled={!isValid}>
+        <CustomButton type="submit" cypressData="change-password-button" loading={isSubmitting} disabled={!isValid}>
           {" "}
           {NAME_TRANS_EN.CHANGE_PASSWORD}{" "}
         </CustomButton>{" "}

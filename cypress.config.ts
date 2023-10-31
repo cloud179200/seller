@@ -1,18 +1,18 @@
 import { loadEnvConfig } from '@next/env';
 import { defineConfig } from 'cypress';
-
+import config from "./app/config"
 const { combinedEnv } = loadEnvConfig(process.cwd());
 export default defineConfig({
   projectId: "myj8ut",
   env: combinedEnv,
   e2e: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: config.BASE_URL,
     retries: {
       runMode: 3,
     },
     viewportHeight: 1080,
     viewportWidth: 1920,
-    video: true,
+    video: config.NODE_ENV === "test",
     // Specifies the directory where Cypress should look for spec files.
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     // Specifies the directory where Cypress should store screenshots and videos.

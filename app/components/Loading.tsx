@@ -16,7 +16,7 @@ const LoadingComponent = ({ isModal = false, height = "100vh" }) => {
       ) : (
         <ProgressBar
           height="auto"
-          width="30%"
+          width="20%"
           ariaLabel="progress-bar-loading"
           wrapperStyle={{}}
           wrapperClass="progress-bar-wrapper"

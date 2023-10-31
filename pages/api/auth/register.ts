@@ -75,18 +75,49 @@ export default async function handler(
     return
   }
 
-  const exists = isTesting ? false : await prisma.user.findUnique({
+  const userExists = isTesting ? false : await prisma.user.findUnique({
     where: {
       email,
     },
   });
 
-  if (exists) {
+  const dobMomentObject = moment(date_of_birth);
+
+  if (userExists) {
+    if(userExists.emailVerified === null){
+      const newEmailVerifyToken = await getHashedString(
+        email + password + moment().toISOString()
+      );
+      try {
+        const verificationToken = await prisma.verificationToken.update({
+          where:{
+            user_id: userExists.id
+          },
+          data:{
+            token: newEmailVerifyToken
+          }
+        })
+
+        
+        if (!verificationToken) {
+          throw new Error("Create verification token failed");
+        }
+
+        await sendEmail({
+          to: email,
+          subject: "VERIFY EMAIL",
+          html: `<a href="${config.BASE_URL}/auth/verify?emailVerifyToken=${newEmailVerifyToken}">Verify email</a>`,
+        });
+        res.status(200).json(userExists);
+      } catch (error: any) {
+        res.status(500).send(resErrorJson(error.toString()));
+      }
+      return
+    }
     res.status(400).send("User already exists");
     return
   }
 
-  const dobMomentObject = moment(date_of_birth);
 
   if (!dobMomentObject.isValid()) {
     res.status(400).send("Invalid Date");
@@ -96,6 +127,7 @@ export default async function handler(
   const emailVerifyToken = await getHashedString(
     email + password + moment().toISOString()
   );
+  
   const hashedPassword = await getHashedString(password)
 
   const newUserData: User = {
@@ -142,6 +174,7 @@ export default async function handler(
       subject: "VERIFY EMAIL",
       html: `<a href="${config.BASE_URL}/auth/verify?emailVerifyToken=${emailVerifyToken}">Verify email</a>`,
     });
+    
     res.status(200).json(user);
   } catch (error: any) {
     res.status(500).send(resErrorJson(error.toString()));

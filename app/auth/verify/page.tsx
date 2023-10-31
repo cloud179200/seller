@@ -12,6 +12,7 @@ import EmailFailedPNG from "@/public/images/error.png";
 import Link from "next/link";
 import LoadingComponent from "@/app/components/Loading";
 import { useSearchParams } from "next/navigation";
+import { useDebounceFn } from "@reactuses/core";
 
 function Verify() {
   const searchParams = useSearchParams();
@@ -25,12 +26,12 @@ function Verify() {
     content: NAME_TRANS_EN.CHECK_EMAIL_FOR_VERIFY,
   });
   const [loading, setLoading] = useState(true);
-
   const verifyToken = async () => {
     if (!emailVerifyToken) {
       setLoading(false);
       return;
     }
+
     const res = await fetch(`/api/auth/verify`, {
       method: "POST",
       headers: {
@@ -38,6 +39,7 @@ function Verify() {
       },
       body: JSON.stringify({ emailVerifyToken }),
     });
+
     setLoading(false);
     switch (res.status) {
       case HTTP_RESPONSE_STATUS.OK:
@@ -52,8 +54,7 @@ function Verify() {
           content: (
             <>
               {NAME_TRANS_EN.VERIFY_EMAIL_FAILED}.<br /> Please Connect Email
-              Support:{" "}
-              <Link href="mailto:tehe@gmail.com">tehe@gmail.com</Link>.
+              Support: <Link href="mailto:tehe@gmail.com">tehe@gmail.com</Link>.
             </>
           ),
         });
@@ -66,9 +67,10 @@ function Verify() {
         break;
     }
   };
+  const { run: debounceVerifyToken } = useDebounceFn(verifyToken, 3000);
 
   useEffect(() => {
-    verifyToken();
+    debounceVerifyToken();
   }, []);
 
   if (loading) {
@@ -76,21 +78,22 @@ function Verify() {
   }
 
   return (
-    <div className="flex min-h-screen flex-wrap flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-wrap flex-col items-center justify-center animate-appearance-once">
       <img src={statusContent.image.src} width="20%" alt="status" />
-      <h3 className="mb-2 text-center font-bold text-black" data-cy="verify-message">
+      <h3
+        className="mb-2 text-center font-bold text-black"
+        data-cy="verify-message"
+      >
         {statusContent.content}
       </h3>
       {statusContent.content !== STATUS_VERIFY_EMAIL.SENT && (
-        <Animate>
-          <Link
-            className="w-full rounded-lg bg-blue-500 px-4 py-2 font-bold text-white transition-colors duration-300 hover:bg-blue-700 focus:shadow-lg focus:outline-none"
-            type="button"
-            href="/auth/login"
-          >
-            {NAME_TRANS_EN.BACK_HOME_PAGE}
-          </Link>
-        </Animate>
+        <Link
+          className="font-bold text-blue-500 hover:underline"
+          type="button"
+          href="/auth/login"
+        >
+          {NAME_TRANS_EN.BACK_HOME_PAGE}
+        </Link>
       )}
     </div>
   );

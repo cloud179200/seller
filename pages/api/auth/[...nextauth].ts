@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
         });
         // if user doesn't exist or password doesn't match
         if (!user || !(await compareHashString(password, user.password || ""))) {
-          throw new Error("Invalid username or password!");
+          throw new Error("Invalid email or password!");
         }
         if (!user.emailVerified) {
           throw new Error("Account not verified!");

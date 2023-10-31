@@ -50,9 +50,7 @@ describe('Login', () => {
     cy.get('[data-cy="email"]').type(invalidCredentials.email)
     cy.get('[data-cy="password"]').type(invalidCredentials.password)
     cy.get('[data-cy="button-login-default"]').click();
-    // assert that the user is logged in
-    cy.intercept('POST', '/api/auth/callback/credentials?').as("unauthorizedCallback")
-    cy.wait('@unauthorizedCallback').its('response.statusCode').should('eq', 401)
+    cy.get('.toast-error > div').last().should('contain', "Invalid email or password");;
     cy.url().should('include', '/auth/login');
   });
 });

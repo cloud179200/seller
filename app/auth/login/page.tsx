@@ -34,16 +34,20 @@ const useSigninFormControl = () => {
         ..._values,
       });
       formikHelpers.setSubmitting(false);
+
       if (!result) {
-        toast.error("Error");
+        toast.error("Error", { className: "toast-error" });
         return;
       }
+
       const { ok, error } = result;
+
       if (ok) {
         router.push("/dashboard");
         return;
       }
-      toast.error(error || "");
+      
+      toast.error(error || "", { className: "toast-error" });
     },
   });
 
@@ -97,7 +101,7 @@ const SignInComponent = () => {
       await signIn("google");
     } catch (err) {
       toast.error(
-        err instanceof Error ? err.message : API_MESSAGE.SERVER_ERROR
+        err instanceof Error ? err.message : API_MESSAGE.SERVER_ERROR, { className: "toast-error" }
       );
     } finally {
       setSubmitting(false);

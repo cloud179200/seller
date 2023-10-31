@@ -10,6 +10,7 @@ export default async function handler(
   const { emailVerifyToken } = req.body;
 
   const isTesting = emailVerifyToken === TESTING.EMAIL_VERIFY_TOKEN;
+
   if (isTesting) {
     try {
       const testingUser = await prisma.user.findUnique({
@@ -36,24 +37,24 @@ export default async function handler(
   }
 
   if (!emailVerifyToken) {
-    res.status(400).send(resErrorJson("Invalid token"));
+    res.status(400).send(resErrorJson("Not found token"));
     return
   }
   
   try {
-    const verificationToken = await prisma.verificationToken.findUnique({
+    const verificationTokenDeleted = await prisma.verificationToken.delete({
       where:{
         token: emailVerifyToken
       }
     })
 
-    if(!verificationToken){
+    if(!verificationTokenDeleted){
       throw new Error("Token expired");
     }
 
     const user = await prisma.user.update({
       where: {
-        id: verificationToken.user_id,
+        id: verificationTokenDeleted.user_id,
       },
       data: {
         emailVerified: moment().toDate(),
@@ -63,13 +64,7 @@ export default async function handler(
     if(!user){
       throw new Error("Not found user");
     }
-
-    await prisma.verificationToken.delete({
-      where:{
-        user_id: user.id
-      }
-    })
-
+    
     res.status(200).send(resSuccessJson());
   } catch (error: any) {
     res.status(500).send(resErrorJson(error.toString()));

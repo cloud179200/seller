@@ -17,7 +17,7 @@ function CustomProviders({
 }) {
   return (
     <>
-      <SessionProvider session={session} refetchOnWindowFocus>
+      <SessionProvider session={session}>
         <Provider store={store}>
           <div>
             <Toaster containerClassName="z-50" />

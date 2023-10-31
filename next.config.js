@@ -7,7 +7,7 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    domains: ["i.pinimg.com", "avatars.githubusercontent.com", "*"],
+    domains: ["*"],
   },
   typescript: {
     tsconfigPath: "./tsconfig.json",

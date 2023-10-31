@@ -8,9 +8,7 @@ import moment from "moment";
 import { User, VerificationToken } from "@prisma/client";
 import { sendEmail } from "@/app/utils/email";
 import config from "@/app/config";
-import { TESTING } from "@/app/config/constant";
-
-const TEST_EMAIL = "test@gmail.com"
+import { HTTP_RESPONSE_STATUS } from "@/app/config/constant";
 
 export default async function handler(
   req: NextApiRequest,
@@ -28,54 +26,7 @@ export default async function handler(
     gender,
   } = req.body;
 
-
-  const isTesting = email === TESTING.EMAIL;
-
-  if (isTesting) {
-    try {
-      const testingUser = await prisma.user.findUnique({
-        where: {
-          email,
-        },
-      });
-
-      if (!testingUser) {
-        throw new Error("Create user failed");
-      }
-      
-      await prisma.verificationToken.deleteMany({
-        where: {
-          user_id: testingUser.id
-        },
-      });
-
-      const testingEmailVerifyToken = await getHashedString(
-        email + password
-      );
-      
-      const newTestingVerificationData: VerificationToken = {
-        id: new ObjectId().toString(),
-        token: testingEmailVerifyToken,
-        user_id: "",
-        expires: null
-      }
-
-      const verificationToken = await prisma.verificationToken.create({
-        data: { ...newTestingVerificationData, user_id: testingUser.id }
-      })
-  
-      if (!verificationToken) {
-        throw new Error("Create verification token failed");
-      }
-
-      res.status(200).json(testingUser)
-    } catch (error: any) {
-      res.status(500).send(resErrorJson(error.toString()));
-    }
-    return
-  }
-
-  const userExists = isTesting ? false : await prisma.user.findUnique({
+  const userExists = await prisma.user.findUnique({
     where: {
       email,
     },
@@ -108,19 +59,19 @@ export default async function handler(
           subject: "VERIFY EMAIL",
           html: `<a href="${config.BASE_URL}/auth/verify?emailVerifyToken=${newEmailVerifyToken}">Verify email</a>`,
         });
-        res.status(200).json(userExists);
+        res.status(HTTP_RESPONSE_STATUS.OK).json(userExists);
       } catch (error: any) {
-        res.status(500).send(resErrorJson(error.toString()));
+        res.status(HTTP_RESPONSE_STATUS.SERVER_ERROR).send(resErrorJson(error.toString()));
       }
       return
     }
-    res.status(400).send("User already exists");
+    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).send("User already exists");
     return
   }
 
 
   if (!dobMomentObject.isValid()) {
-    res.status(400).send("Invalid Date");
+    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).send("Invalid Date");
     return
   }
 
@@ -175,8 +126,8 @@ export default async function handler(
       html: `<a href="${config.BASE_URL}/auth/verify?emailVerifyToken=${emailVerifyToken}">Verify email</a>`,
     });
     
-    res.status(200).json(user);
+    res.status(HTTP_RESPONSE_STATUS.OK).json(user);
   } catch (error: any) {
-    res.status(500).send(resErrorJson(error.toString()));
+    res.status(HTTP_RESPONSE_STATUS.SERVER_ERROR).send(resErrorJson(error.toString()));
   }
 }

@@ -48,7 +48,8 @@ const useChangePasswordFormControl = () => {
         });
         return;
       }
-      toast.error(await result.text());
+      const resJson = await result.json();
+      toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL);
     },
   });
 

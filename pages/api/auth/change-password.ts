@@ -3,8 +3,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { resErrorJson, resSuccessJson } from "@/app/utils";
 import { FORM_VALIDATE_ERROR_MESSAGE, HTTP_RESPONSE_STATUS } from "@/app/config/constant";
 import * as Yup from "yup";
-import { getSession } from "next-auth/react";
 import { compareHashString, getHashedString } from "@/app/utils/auth";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
@@ -28,7 +29,7 @@ export default async function handler(
       throw new Error("new password is same old password");
     }
 
-    const session = await getSession({ req });
+    const session = await getServerSession(req, res, authOptions)
 
     const user = await prisma.user.findUnique({
       where: {
@@ -63,6 +64,6 @@ export default async function handler(
 
     res.status(HTTP_RESPONSE_STATUS.OK).json(resSuccessJson())
   } catch (error: any) {
-    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).json(resErrorJson(error))
+    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).json(resErrorJson(error.toString()))
   }
 }

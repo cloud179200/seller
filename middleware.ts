@@ -13,10 +13,11 @@ export async function middleware(req: NextApiRequest | NextRequest) {
   }
 
   const reqUrl = req.url || "";
+  console.log({reqUrl})
   if (PROTECTED_API_ROUTE.some(item => reqUrl.includes(item.path))) {
 
     const session = await getSession({ req });
-
+    console.log({session})
     if (!session?.user?.email) {
       const res = NextResponse;
       res.json(resErrorJson, { status: HTTP_RESPONSE_STATUS.UNAUTHORIZED });

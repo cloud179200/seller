@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PROTECTED_API_ROUTE } from './app/config/router'
-import { getSession } from 'next-auth/react';
 import { resErrorJson } from './app/utils';
 import { NextApiRequest } from 'next';
 import { HTTP_RESPONSE_STATUS } from './app/config/constant';
+import { getToken } from 'next-auth/jwt';
+import cf from "./app/config";
 
 export async function middleware(req: NextApiRequest | NextRequest) {
   if (req instanceof NextRequest) {
@@ -13,12 +14,14 @@ export async function middleware(req: NextApiRequest | NextRequest) {
   }
 
   const reqUrl = req.url || "";
-  console.log({reqUrl})
   if (PROTECTED_API_ROUTE.some(item => reqUrl.includes(item.path))) {
+    
+    const token = await getToken({
+      req,
+      secret: cf.SECRET,
+    });
 
-    const session = await getSession({ req });
-    console.log({session})
-    if (!session?.user?.email) {
+    if (!token?.email) {
       const res = NextResponse;
       res.json(resErrorJson, { status: HTTP_RESPONSE_STATUS.UNAUTHORIZED });
       return res

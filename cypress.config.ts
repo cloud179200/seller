@@ -2,13 +2,13 @@ import { loadEnvConfig } from '@next/env';
 import { defineConfig } from 'cypress';
 import config from "./app/config"
 import { resetLogin, resetRegister, resetEmailVerification } from './cypress/tasks/auth';
-const { combinedEnv } = loadEnvConfig(process.cwd());
 
 export default defineConfig({
   projectId: "myj8ut",
-  env: combinedEnv,
+  env: config,
+  supportFolder: "cypress/support",
   e2e: {
-    baseUrl: config.BASE_URL,
+    baseUrl: config.BASE_URL || "http://localhost:3000",
     retries: {
       runMode: 3,
     },
@@ -22,13 +22,13 @@ export default defineConfig({
     videosFolder: 'cypress/videos',
     // Specifies the amount of time that Cypress should wait for an element to become visible before failing the test.
     defaultCommandTimeout: 10000,
-    taskTimeout: 15000
-  },
-  setupNodeEvents(on, config) {
-    on('task', {
-      resetLogin: resetLogin,
-      resetRegister: resetRegister,
-      resetEmailVerification: resetEmailVerification
-    });
-  },
+    taskTimeout: 15000,
+    setupNodeEvents(on, config) {
+      on('task', {
+        resetLogin,
+        resetRegister,
+        resetEmailVerification
+      });
+    }
+  }
 });

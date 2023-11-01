@@ -1,4 +1,5 @@
 {
+  // Compiler options
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -22,14 +23,20 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["cypress", "node", "./cypress/support"]
+    "types": ["cypress", "node", "./cypress/support/index.d.ts"]
   },
+
+  // Include files
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "app/components/layout/MainLayout/Sidebar/NavCollapse/index.sth",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
+
+  // Exclude files
+  "exclude": [
+    "node_modules",
+    "cypress.config.ts"
+  ]
 }

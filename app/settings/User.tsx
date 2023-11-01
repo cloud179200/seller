@@ -42,14 +42,14 @@ const useChangePasswordFormControl = () => {
       formikHelpers.setSubmitting(false);
       if(result.status === HTTP_RESPONSE_STATUS.OK){
         toast(API_MESSAGE.UPDATE_SUCCESS, {
-          className: "font-medium",
+          className: "toast-success font-medium",
           icon: <Lottie className="h-8 w-8" animationData={tickIOS} initialSegment={[14, 28]} />,
           duration: 1500
         });
         return;
       }
       const resJson = await result.json();
-      toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL);
+      toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL, { className: "toast-error"});
     },
   });
 

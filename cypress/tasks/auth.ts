@@ -27,47 +27,62 @@ const testVerificationToken: VerificationToken = {
 }
 
 export const resetLogin = async () => {
-  await prisma.user.delete({
-    where: {
-      email: TESTING_DATA.USER_EMAIL
-    }
-  })
+  try {
+    await prisma.user.deleteMany({
+      where: {
+        email: TESTING_DATA.USER_EMAIL
+      }
+    });
 
-  await prisma.user.create({ data: { ...testUser, emailVerified: moment().toISOString() } })
+    await prisma.user.create({ data: { ...testUser, emailVerified: moment().toISOString() } });
+    return true;
+  } catch (error) {
+    return error;
+  }
 }
 
 export const resetRegister = async () => {
-  const userDeleted = await prisma.user.delete({
-    where: {
-      email: TESTING_DATA.USER_EMAIL
-    }
-  })
+  try {
+    await prisma.user.deleteMany({
+      where: {
+        email: TESTING_DATA.USER_EMAIL
+      }
+    });
 
-  if (userDeleted) await prisma.verificationToken.delete({
-    where: {
-      user_id: userDeleted.id
-    }
-  })
+    await prisma.verificationToken.deleteMany({
+      where: {
+        token: TESTING_DATA.EMAIL_VERIFY_TOKEN
+      }
+    });
+    return true;
+  } catch (error) {
+    return error;
+  }
 }
 
 export const resetEmailVerification = async () => {
-  const userDeleted = await prisma.user.delete({
-    where: {
-      email: TESTING_DATA.USER_EMAIL
+  try {
+    await prisma.user.deleteMany({
+      where: {
+        email: TESTING_DATA.USER_EMAIL
+      }
+    });
+
+    await prisma.verificationToken.deleteMany({
+      where: {
+        token: TESTING_DATA.EMAIL_VERIFY_TOKEN
+      }
+    });
+
+    const userCreated = await prisma.user.create({ data: { ...testUser, emailVerified: moment().toISOString() } });
+
+    if (userCreated) {
+      await prisma.verificationToken.create({
+        data: { ...testVerificationToken, user_id: userCreated.id }
+      });
     }
-  })
-
-  if (userDeleted) await prisma.verificationToken.delete({
-    where: {
-      user_id: userDeleted.id
-    }
-  })
-
-  const userCreated = await prisma.user.create({ data: { ...testUser, emailVerified: moment().toISOString() } })
-
-  if(userCreated){
-    await prisma.verificationToken.create({
-      data: {...testVerificationToken, user_id: userCreated.id}
-    })
+    return true;
+  } catch (error) {
+    return error;
   }
 }

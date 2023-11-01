@@ -14,7 +14,7 @@ import moment from "moment";
 import { TbEye, TbEyeOff } from "react-icons/tb";
 import CustomInput from "@/app/components/custom-input/CustomInput";
 import CustomButton from "@/app/components/custom-button/CustomButton";
-import { HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "@/app/config/constant";
+import { API_MESSAGE, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "@/app/config/constant";
 
 const useSignupFormControl = () => {
   const router = useRouter();
@@ -70,13 +70,16 @@ const useSignupFormControl = () => {
         toast.error("Error");
         return;
       }
+
       if (result.status === HTTP_RESPONSE_STATUS.OK) {
         setTimeout(() => {
           router.push("/auth/verify");
         }, 2000);
-      } else {
-        toast.error(await result.text());
-      }
+        return
+      }  
+      
+      const resJson = await result.json();
+      toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL);
     },
   });
 

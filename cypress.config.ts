@@ -1,4 +1,3 @@
-import { loadEnvConfig } from '@next/env';
 import { defineConfig } from 'cypress';
 import config from "./app/config"
 import { resetLogin, resetRegister, resetEmailVerification } from './cypress/tasks/auth';

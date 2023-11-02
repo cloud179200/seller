@@ -1,6 +1,6 @@
-import prisma from '../../app/lib/prisma';
+import prisma from '@/app/lib/prisma';
 import { User, VerificationToken } from '@prisma/client';
-import { TESTING_DATA } from '../../app/config/constant';
+import { TESTING_DATA } from '@/app/config/test';
 import moment from "moment";
 import { ObjectId } from "mongodb";
 

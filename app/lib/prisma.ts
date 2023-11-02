@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import config from "../../app/config";
+import config from "@/app/config";
 
 declare global {
   // eslint-disable-next-line no-var, no-unused-vars

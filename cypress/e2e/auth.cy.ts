@@ -1,4 +1,5 @@
-import { API_MESSAGE, NAME_TRANS_EN, TESTING_DATA } from '../../app/config/constant';
+import { TESTING_DATA } from '@/app/config/test';
+import { API_MESSAGE, NAME_TRANS_EN } from '@/app/config/constant';
 
 describe('Login', () => {
 

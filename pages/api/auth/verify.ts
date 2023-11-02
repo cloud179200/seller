@@ -2,7 +2,7 @@ import prisma from "@/app/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { resErrorJson, resSuccessJson } from "@/app/utils";
 import moment from "moment";
-import { HTTP_RESPONSE_STATUS, TESTING_DATA } from "@/app/config/constant";
+import { HTTP_RESPONSE_STATUS } from "@/app/config/constant";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

@@ -40,6 +40,6 @@ export default async function handler(
     
     res.status(HTTP_RESPONSE_STATUS.OK).send(resSuccessJson());
   } catch (error: any) {
-    res.status(HTTP_RESPONSE_STATUS.SERVER_ERROR).send(resErrorJson(error.toString()));
+    res.status(HTTP_RESPONSE_STATUS.INTERNAL_SERVER_ERROR).send(resErrorJson(error.toString()));
   }
 }

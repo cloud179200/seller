@@ -53,7 +53,7 @@ function MenuList(props: IProps) {
                 );
             default:
                 return (
-                    <h6 className="text-center text-rose-600" key={item.id}>
+                    <h6 className="text-center text-error" key={item.id}>
                         Menu Items Error
                     </h6>
                 );

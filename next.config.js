@@ -12,10 +12,11 @@ const nextConfig = {
   typescript: {
     tsconfigPath: "./tsconfig.json",
   },
-  // eslint: {
-  //   dirs: ["./.eslintrc.json"],
-  // },
-  swcMinify: true
+  eslint: {
+    dirs: ['./*'],
+  },
+  swcMinify: true,
+  reactStrictMode: false
 };
 
 module.exports = nextConfig;

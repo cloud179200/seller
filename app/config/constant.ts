@@ -1,11 +1,41 @@
 export const HTTP_RESPONSE_STATUS = {
-  OK: 200,
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  MISSING_AUTHORIZED: 403,
-  NOT_FOUND: 404,
-  SERVER_ERROR: 500,
+  OK: 200,                   // Successful response
+  CREATED: 201,              // Resource created successfully
+  ACCEPTED: 202,             // Request accepted, processing pending
+  NO_CONTENT: 204,           // Request successful, no content to send
+
+
+  MULTIPLE_CHOICES: 300,     // Request has multiple possible responses, user agent can choose one
+  MOVED_PERMANENTLY: 301,    // Resource has permanently moved to a new URL
+  FOUND: 302,                // Resource has temporarily moved to a different URL
+  SEE_OTHER: 303,            // Resource can be found at a different URL using GET method
+  NOT_MODIFIED: 304,         // Resource has not been modified since last requested
+  USE_PROXY: 305,            // Deprecated, should use proxy defined in Location header
+  TEMPORARY_REDIRECT: 307,   // Resource has temporarily moved to a different URL using the same method
+  PERMANENT_REDIRECT: 308,   // Resource has permanently moved to a different URL using the same method
+
+  BAD_REQUEST: 400,          // Malformed request or client error
+  UNAUTHORIZED: 401,         // Unauthorized access, authentication required
+  FORBIDDEN: 403,            // Authenticated, but access to the resource is forbidden
+  NOT_FOUND: 404,            // Requested resource not found
+  METHOD_NOT_ALLOWED: 405,   // Method not supported for requested resource
+
+  INTERNAL_SERVER_ERROR: 500, // Server encountered an unexpected condition
+  BAD_GATEWAY: 502,            // Server received an invalid response from an upstream server
+  SERVICE_UNAVAILABLE: 503,    // Server temporarily unable to handle the request
+  GATEWAY_TIMEOUT: 504         // Gateway did not receive a timely response
 };
+
+export const HTTP_REQUEST_METHOD = {
+  GET: 'GET',           // Retrieve data from the server
+  POST: 'POST',         // Send data to the server to create a new resource
+  PUT: 'PUT',           // Update an existing resource on the server
+  DELETE: 'DELETE',     // Delete a resource on the server
+  PATCH: 'PATCH',       // Apply partial modifications to a resource
+  HEAD: 'HEAD',         // Retrieve headers of a resource without the body content
+  OPTIONS: 'OPTIONS',   // Retrieve the supported methods for a resource
+};
+
 
 export const FORM_VALIDATE_ERROR_MESSAGE = {
   INVALID: "Invalid field",

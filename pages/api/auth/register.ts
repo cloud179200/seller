@@ -61,7 +61,7 @@ export default async function handler(
         });
         res.status(HTTP_RESPONSE_STATUS.OK).json(userExists);
       } catch (error: any) {
-        res.status(HTTP_RESPONSE_STATUS.SERVER_ERROR).send(resErrorJson(error.toString()));
+        res.status(HTTP_RESPONSE_STATUS.INTERNAL_SERVER_ERROR).send(resErrorJson(error.toString()));
       }
       return
     }
@@ -128,6 +128,6 @@ export default async function handler(
     
     res.status(HTTP_RESPONSE_STATUS.OK).json(user);
   } catch (error: any) {
-    res.status(HTTP_RESPONSE_STATUS.SERVER_ERROR).send(resErrorJson(error.toString()));
+    res.status(HTTP_RESPONSE_STATUS.INTERNAL_SERVER_ERROR).send(resErrorJson(error.toString()));
   }
 }

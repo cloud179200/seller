@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Animate from "@/app/components/extended/Animate";
 import {
   STATUS_VERIFY_EMAIL,
   NAME_TRANS_EN,
   HTTP_RESPONSE_STATUS,
+  HTTP_REQUEST_METHOD,
 } from "@/app/config/constant";
 import EmailSentPNG from "@/public/images/email-sent.png";
 import EmailSuccessPNG from "@/public/images/email-success.png";
@@ -12,7 +12,6 @@ import EmailFailedPNG from "@/public/images/error.png";
 import Link from "next/link";
 import LoadingComponent from "@/app/components/Loading";
 import { useSearchParams } from "next/navigation";
-import { useDebounceFn } from "@reactuses/core";
 
 function Verify() {
   const searchParams = useSearchParams();
@@ -33,7 +32,7 @@ function Verify() {
     }
 
     const res = await fetch(`/api/auth/verify`, {
-      method: "POST",
+      method: HTTP_REQUEST_METHOD.POST,
       headers: {
         "Content-Type": "application/json",
       },
@@ -48,7 +47,7 @@ function Verify() {
           content: NAME_TRANS_EN.VERIFY_EMAIL_SUCCESS,
         });
         break;
-      case HTTP_RESPONSE_STATUS.SERVER_ERROR:
+      case HTTP_RESPONSE_STATUS.INTERNAL_SERVER_ERROR:
         setStatusContent({
           image: EmailFailedPNG,
           content: (
@@ -67,10 +66,9 @@ function Verify() {
         break;
     }
   };
-  const { run: debounceVerifyToken } = useDebounceFn(verifyToken, 3000);
 
   useEffect(() => {
-    debounceVerifyToken();
+    verifyToken();
   }, []);
 
   if (loading) {
@@ -88,7 +86,7 @@ function Verify() {
       </h3>
       {statusContent.content !== STATUS_VERIFY_EMAIL.SENT && (
         <Link
-          className="font-bold text-blue-500 hover:underline"
+          className="font-bold text-info hover:underline"
           type="button"
           href="/auth/login"
         >

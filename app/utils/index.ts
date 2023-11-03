@@ -41,19 +41,25 @@ export const resErrorJson = (message = "Error") => {
 }
 
 export const formatCreditCardNumber = (input: string) => {
-  // Remove non-numeric characters
   let formattedNumber = input.replace(/\D/g, '');
-
-  // Add spaces after every 4 digits
+  const cardHiddenCharacter = "*";
   formattedNumber = formattedNumber.replace(/(\d{4})/g, '$1 ');
-
-  return formattedNumber.trim();
+  const result = formattedNumber.trim().split(" ")
+  result[1] = cardHiddenCharacter.repeat(4);
+  result[2] = cardHiddenCharacter.repeat(4);
+  return result.join(" ");
 };
 
-export const debounce = (func: any, timeout = 300) => {
-  let timer: NodeJS.Timeout;
-  return (...args: any[]) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => { func.apply(this, args); }, timeout);
-  };
+export const getPasswordStrengthCssClass = (strength: number) => {
+  if (strength === 0) {
+    return "border-red-500";
+  } else if (strength <= 1) {
+    return "border-orange-400";
+  } else if (strength <= 2) {
+    return "border-blue-500";
+  } else if (strength <= 3) {
+    return "border-green-500";
+  } else if (strength <= 4) {
+    return "border-purple-500";
+  }
 }

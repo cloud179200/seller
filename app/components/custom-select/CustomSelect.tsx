@@ -29,7 +29,7 @@ function CustomSelect(props: IProps) {
         {options.map((optionProps, index) => <option key={"custom-select"+index} {...optionProps}>{optionProps.label}</option>)}
       </select>
       {error && errorMessage && <label className="label">
-        <span className="label-text-alt text-rose-600">{errorMessage}</span>
+        <span className="label-text-alt text-error">{errorMessage}</span>
       </label>}
       {bottomComponent && <div className="relative mt-4 w-full">
         {bottomComponent}

@@ -112,10 +112,10 @@ const SignInComponent = () => {
     <>
       <>
         <div className="flex min-h-screen flex-wrap overflow-hidden md:overflow-auto">
-          <div className="flex h-screen w-full items-center justify-center bg-gray-100 py-16 md:w-2/3">
+          <div className="flex h-screen w-full items-center justify-center bg-base-200 py-16 md:w-2/3">
             <form
               onSubmit={handleSubmit}
-              className="mx-4 w-full max-w-screen-md overflow-hidden rounded-lg bg-white shadow-md md:w-4/5"
+              className="mx-4 w-full max-w-screen-md overflow-hidden rounded-lg bg-base-100 shadow-md md:w-4/5"
             >
               <div className="px-6 py-8">
                 <h2 className="mb-4 text-center text-3xl font-bold">{NAME_TRANS_EN.SIGN_IN_TITLE}</h2>
@@ -173,7 +173,7 @@ const SignInComponent = () => {
                     </label>
                   </div>
                   <Link 
-                    className="text-sm font-bold text-blue-500 hover:underline"
+                    className="text-sm font-bold text-info hover:underline"
                     href="#"
                   >
                     Forgot Password?
@@ -198,12 +198,12 @@ const SignInComponent = () => {
                   />
                 </CustomButton>
               </div>
-              <div className="bg-gray-100 px-6 py-4">
-                <p className="text-sm text-gray-700">
+              <div className="bg-base-100 px-6 py-4">
+                <p className="text-sm text-neutral-content">
                   {NAME_TRANS_EN.DONT_HAVE_ACCOUNT}
                   {" "}
                   <Link
-                    className="font-bold text-blue-500 hover:underline"
+                    className="font-bold text-info hover:underline"
                     href="/auth/register"
                   >
                     {NAME_TRANS_EN.SIGN_UP}
@@ -212,7 +212,7 @@ const SignInComponent = () => {
               </div>
             </form>
           </div>
-          <div className="hidden w-full bg-gray-300 md:block md:w-1/3">
+          <div className="hidden w-full bg-base-300 md:block md:w-1/3">
             <img
               className="h-screen w-full object-cover"
               src="https://i.pinimg.com/564x/0e/93/a2/0e93a2f8b0d20439b075ae3dccfa8e03.jpg"

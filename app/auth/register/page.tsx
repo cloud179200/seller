@@ -14,7 +14,8 @@ import moment from "moment";
 import { TbEye, TbEyeOff } from "react-icons/tb";
 import CustomInput from "@/app/components/custom-input/CustomInput";
 import CustomButton from "@/app/components/custom-button/CustomButton";
-import { API_MESSAGE, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "@/app/config/constant";
+import { API_MESSAGE, HTTP_REQUEST_METHOD, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "@/app/config/constant";
+import { getPasswordStrengthCssClass } from "@/app/utils";
 
 const useSignupFormControl = () => {
   const router = useRouter();
@@ -57,7 +58,7 @@ const useSignupFormControl = () => {
     onSubmit: async (_values, formikHelpers) => {
       formikHelpers.setSubmitting(true);
       const result = await fetch("/api/auth/register", {
-        method: "POST",
+        method: HTTP_REQUEST_METHOD.POST,
         headers: {
           "Content-Type": "application/json",
         },
@@ -84,17 +85,7 @@ const useSignupFormControl = () => {
   });
 
   const passwordStrengthClass = useMemo(() => {
-    if (strength === 0) {
-      return "border-red-500";
-    } else if (strength <= 1) {
-      return "border-yellow-500";
-    } else if (strength <= 2) {
-      return "border-blue-500";
-    } else if (strength <= 3) {
-      return "border-green-500";
-    } else if (strength <= 4) {
-      return "border-purple-500";
-    }
+    return getPasswordStrengthCssClass(strength)
   }, [strength]);
 
   const indicatorPassword = (
@@ -159,10 +150,10 @@ const SignUpComponent = () => {
   return (
     <>
       <div className="flex min-h-screen flex-wrap overflow-hidden md:overflow-auto">
-        <div className="flex h-screen w-full items-center justify-center bg-gray-100 py-16 md:w-2/3">
+        <div className="flex h-screen w-full items-center justify-center bg-base-200 py-16 md:w-2/3">
           <form
             onSubmit={handleSubmit}
-            className="mx-4 w-full max-w-screen-md overflow-hidden rounded-lg bg-white shadow-md md:w-4/5"
+            className="mx-4 w-full max-w-screen-md overflow-hidden rounded-lg bg-base-100 shadow-md md:w-4/5"
           >
             <div className="px-6 py-8">
               <h2 className="mb-4 text-center text-3xl font-bold">{NAME_TRANS_EN.SIGN_IN_TITLE}</h2>
@@ -302,12 +293,12 @@ const SignUpComponent = () => {
                 {NAME_TRANS_EN.SIGN_UP}
               </CustomButton>
             </div>
-            <div className="bg-gray-100 px-6 py-4">
-              <p className="text-sm text-gray-700">
+            <div className="bg-base-100 px-6 py-4">
+              <p className="text-sm text-neutral-content">
                 {NAME_TRANS_EN.ALREADY_HAVE_ACCOUNT}
                 {" "}
                 <Link
-                  className="font-bold text-blue-500 hover:underline"
+                  className="font-bold text-info hover:underline"
                   href="/auth/login"
                 >
                   {NAME_TRANS_EN.SIGN_IN}
@@ -316,7 +307,7 @@ const SignUpComponent = () => {
             </div>
           </form>
         </div>
-        <div className="hidden w-full bg-gray-300 md:block md:w-1/3">
+        <div className="hidden w-full bg-base-300 md:block md:w-1/3">
           <img
             className="h-screen w-full object-cover"
             src="https://i.pinimg.com/564x/0e/93/a2/0e93a2f8b0d20439b075ae3dccfa8e03.jpg"

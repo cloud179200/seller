@@ -1,14 +1,11 @@
 import prisma from "@/app/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { resErrorJson, resSuccessJson } from "@/app/utils";
-import { FORM_VALIDATE_ERROR_MESSAGE, HTTP_RESPONSE_STATUS, NOTIFICATION_KEYS } from "@/app/config/constant";
-import * as Yup from "yup";
-import { compareHashString, getHashedString } from "@/app/utils/auth";
+import { HTTP_RESPONSE_STATUS, NOTIFICATION_KEYS } from "@/app/config/constant";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import { NotificationSettings } from "@prisma/client";
 import { ObjectId } from "mongodb";
-import value from '@/app/assets/scss/_themes-vars.module.scss';
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,7 +32,7 @@ export default async function handler(
       throw new Error("not found user");
     }
 
-    const notificationItem = await prisma.notificationSettings.findUnique({
+    const notificationItem = await prisma.notificationSettings.findFirst({
       where: {
         user_id: user.id,
         setting_key: NOTIFICATION_KEYS[key]
@@ -47,7 +44,7 @@ export default async function handler(
         id: new ObjectId().toString(),
         user_id: user.id,
         setting_key: NOTIFICATION_KEYS[key],
-        setting_value: String(value)
+        setting_value: value
       }
       const notificationItemCreated = await prisma.notificationSettings.create({
         data: newItem
@@ -56,16 +53,16 @@ export default async function handler(
         throw new Error("create settings failed");
       }
     } else {
-      const notificationItemUpdated = await prisma.notificationSettings.update({
+      const notificationItemUpdated = await prisma.notificationSettings.updateMany({
         where: {
           user_id: user.id,
           setting_key: NOTIFICATION_KEYS[key]
         },
         data: {
-          setting_value: String(value)
+          setting_value: value
         }
       })
-      if (!notificationItemUpdated) {
+      if (notificationItemUpdated.count === 0) {
         throw new Error("update settings failed");
       }
     }

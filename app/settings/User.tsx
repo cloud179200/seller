@@ -4,15 +4,16 @@ import { faker } from "@faker-js/faker";
 import { useSession } from "next-auth/react";
 import _ from "underscore";
 import { useFormik } from "formik";
-import { changePasswordSchema } from "../utils/schema";
-import { strengthIndicator } from "../utils/password-strength";
-import CustomInput from "../components/custom-input/CustomInput";
-import { API_MESSAGE, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "../config/constant";
+import { changePasswordSchema } from "@/app/utils/schema";
+import { strengthIndicator } from "@/app/utils/password-strength";
+import CustomInput from "@/app/components/custom-input/CustomInput";
+import { API_MESSAGE, HTTP_REQUEST_METHOD, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "@/app/config/constant";
 import { TbEye, TbEyeOff } from "react-icons/tb";
-import CustomButton from "../components/custom-button/CustomButton";
+import CustomButton from "@/app/components/custom-button/CustomButton";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import tickIOS from "@/app/assets/lottie/tick-ios.json";
+import { getPasswordStrengthCssClass } from "@/app/utils";
 
 const useChangePasswordFormControl = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -30,7 +31,7 @@ const useChangePasswordFormControl = () => {
     onSubmit: async (_values, formikHelpers) => {
       formikHelpers.setSubmitting(true);
       const result = await fetch("/api/auth/change-password", {
-        method: "POST",
+        method:HTTP_REQUEST_METHOD.POST,
         headers: {
           "Content-Type": "application/json",
         },
@@ -82,17 +83,7 @@ const useChangePasswordFormControl = () => {
   } = formik;
 
   const passwordStrengthClass = useMemo(() => {
-    if (strength === 0) {
-      return "border-red-500";
-    } else if (strength <= 1) {
-      return "border-yellow-500";
-    } else if (strength <= 2) {
-      return "border-blue-500";
-    } else if (strength <= 3) {
-      return "border-green-500";
-    } else if (strength <= 4) {
-      return "border-purple-500";
-    }
+    return getPasswordStrengthCssClass(strength)
   }, [strength]);
 
   const indicatorPassword = (

@@ -22,7 +22,7 @@ export default defineConfig({
     // Specifies the amount of time that Cypress should wait for an element to become visible before failing the test.
     defaultCommandTimeout: 10000,
     taskTimeout: 15000,
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on, _config) {
       on('task', {
         resetLogin,
         resetRegister,

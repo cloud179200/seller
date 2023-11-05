@@ -57,7 +57,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-
+      
+      - name: Install Dependencies
+        run: npm install
+        
       - name: Run server
         uses: cypress-io/github-action@v6
         with:

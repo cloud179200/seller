@@ -20,7 +20,7 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
-          deployment-url: ${{ secrets.BASE_URL }}
+          deployment-url: https://seller-cloud179200.vercel.app/
           timeout: 10
           poll-interval: 1
 

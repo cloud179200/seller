@@ -10,28 +10,31 @@ on:
 
 jobs:
   wait-for-vercel-deployment:
-    runs-on: ubuntu-lastest,
-    environment: CI Process
+    runs-on: ubuntu-latest  # Corrected syntax, removed the comma
+    environment: 
+      name: CI Process  # Moved 'environment' under 'wait-for-vercel-deployment'
     steps:
-      - uses: UnlyEd/github-action-await-vercel@v1 # TODO best practices recommend to use a fixed version instead of @v1 for production usage (i.e: @v1.2.32)
+      - name: Wait for Vercel Deployment
+        uses: UnlyEd/github-action-await-vercel@v1
         id: await-vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
-          deployment-url: seller-cloud179200.vercel.app # TODO Replace by the domain you want to test
-          timeout: 10 # Wait for 10 seconds before failing
-          poll-interval: 1 # Wait for 1 second before each retry
+          deployment-url: ${{ secrets.BASE_URL }}
+          timeout: 10
+          poll-interval: 1
 
       - name: Display deployment status
-        run: "echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
-        
+        run: echo "The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
+
   test:
     runs-on: ubuntu-latest
     needs: wait-for-vercel-deployment
-    environment: CI Process
+    environment: 
+      name: CI Process
     strategy:
-          matrix:
-            node-version: [18.18.x]
+      matrix:
+        node-version: [18.18.x]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -59,4 +62,3 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
-        

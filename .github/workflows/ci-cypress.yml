@@ -19,10 +19,10 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -51,22 +51,25 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       
       - name: Install Dependencies
         run: npm install
         
-      - name: Run server
+      - name: Run E2E tests
         uses: cypress-io/github-action@v6
         with:
-          start: npm start
-      - name: Run E2E tests
-        run: npx cypress run --config-file ./cypress.config.ts --e2e
+          node-version: ${{ matrix.node-version }}
+          build: npm run build
+          start: npm start -- -p 3000
+          config-file: cypress.config.ts
+          install: false
+          working-directory: e2e
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SECRET: ${{ secrets.SECRET }}
@@ -79,3 +82,4 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
+        

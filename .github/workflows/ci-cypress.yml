@@ -10,27 +10,28 @@ on:
 
 jobs:
   wait-for-vercel-deployment:
-    runs-on: ubuntu-latest  # Corrected syntax, removed the comma
-    environment: 
-      name: CI Process  # Moved 'environment' under 'wait-for-vercel-deployment'
+    runs-on: ubuntu-latest
+    environment:
+      name: CI Process
     steps:
       - name: Wait for Vercel Deployment
-        uses: UnlyEd/github-action-await-vercel@v1
+        uses: UnlyEd/github-action-await-vercel@v1.2.43
         id: await-vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
-          deployment-url: https://seller-cloud179200.vercel.app/
+          deployment-url: seller-cloud179200.vercel.app
           timeout: 10
           poll-interval: 1
 
       - name: Display deployment status
-        run: echo "The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
+        run: |
+          echo "The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
 
   test:
     runs-on: ubuntu-latest
     needs: wait-for-vercel-deployment
-    environment: 
+    environment:
       name: CI Process
     strategy:
       matrix:

@@ -9,46 +9,29 @@ on:
       - master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  wait-for-vercel-deployment:
+    runs-on: ubuntu-lastest,
     environment: CI Process
-
-    strategy:
-      matrix:
-        node-version: [18.18.x]
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
+      - uses: UnlyEd/github-action-await-vercel@v1 # TODO best practices recommend to use a fixed version instead of @v1 for production usage (i.e: @v1.2.32)
+        id: await-vercel
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SECRET: ${{ secrets.SECRET }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
-          BASE_URL: ${{ secrets.BASE_URL }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          NODE_ENV: ${{ secrets.NODE_ENV }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          deployment-url: seller-cloud179200.vercel.app # TODO Replace by the domain you want to test
+          timeout: 10 # Wait for 10 seconds before failing
+          poll-interval: 1 # Wait for 1 second before each retry
+
+      - name: Display deployment status
+        run: "echo The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
         
   test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: wait-for-vercel-deployment
     environment: CI Process
-
+    strategy:
+          matrix:
+            node-version: [18.18.x]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -57,19 +40,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      
-      - name: Install Dependencies
-        run: npm install
         
       - name: Run E2E tests
         uses: cypress-io/github-action@v6
         with:
           node-version: ${{ matrix.node-version }}
-          build: npm run build
-          start: npm start -- -p 3000
           config-file: cypress.config.ts
-          install: false
-          working-directory: e2e
+          install: true
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SECRET: ${{ secrets.SECRET }}

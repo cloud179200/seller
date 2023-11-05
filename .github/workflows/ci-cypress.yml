@@ -27,4 +27,4 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm run build
-    - run: cypress run --config-file ./cypress.config.ts --e2e
+    - run: npx cypress run --config-file ./cypress.config.ts --e2e

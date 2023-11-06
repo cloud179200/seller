@@ -240,7 +240,7 @@ const ChangePasswordForm = () => {
           cypressData="confirm_new_password"
         />{" "}
       </div>{" "}
-      <div className="col-start-3 col-end-5 flex items-center justify-center">
+      <div className="col-start-1 col-end-7 md:col-start-3 md:col-end-5 flex items-center justify-center">
         <CustomButton type="submit" cypressData="change-password-button" loading={isSubmitting} disabled={!isValid}>
           {" "}
           {NAME_TRANS_EN.CHANGE_PASSWORD}{" "}
@@ -256,15 +256,15 @@ const User = () => {
 
   const userInfo = useMemo(
     () => (
-      <div className="hero-content flex flex-col items-start justify-start">
+      <div className="hero-content flex flex-col items-start justify-start ">
         <img
           src={data?.user?.image || faker.image.avatar()}
-          className="max-w-sm rounded-lg shadow-2xl"
+          className="md:max-w-sm sm:max-w-full rounded-lg shadow-2xl"
           alt="avatar"
         />
-        <div>
-          <h1 className="text-5xl font-bold">{data?.user?.email}</h1>
-          <p className="py-6">{data?.user?.email}</p>
+        <div className="w-full">
+          <h1 className="md:text-5xl font-bold truncate w-full">{data?.user?.email}</h1>
+          <p className="md:text-base py-6 truncate w-full">{data?.user?.name}</p>
         </div>
       </div>
     ),

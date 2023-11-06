@@ -1,3 +1,5 @@
+import { IResponseSuccessObject, IResponseErrorObject } from "./interface";
+
 export const _sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
@@ -27,24 +29,26 @@ export const fileToBase64 = (file: File) =>
     reader.onerror = (error) => reject(error);
   });
 
-export const resSuccessJson = (message = "Success") => {
+export const resSuccessJson: (message?: string, data?: object | Array<any> | boolean) => IResponseSuccessObject = (message = "Success", data = true) => {
   return {
+    data,
     message
-  }
-}
+  };
+};
 
-export const resErrorJson = (message = "Error") => {
+
+export const resErrorJson: (message?: string) => IResponseErrorObject = (message = "Error") => {
   return {
     error: 1,
     message
-  }
-}
+  };
+};
 
 export const formatCreditCardNumber = (input: string) => {
-  let formattedNumber = input.replace(/\D/g, '');
+  let formattedNumber = input.replace(/\D/g, "");
   const cardHiddenCharacter = "*";
-  formattedNumber = formattedNumber.replace(/(\d{4})/g, '$1 ');
-  const result = formattedNumber.trim().split(" ")
+  formattedNumber = formattedNumber.replace(/(\d{4})/g, "$1 ");
+  const result = formattedNumber.trim().split(" ");
   result[1] = cardHiddenCharacter.repeat(4);
   result[2] = cardHiddenCharacter.repeat(4);
   return result.join(" ");
@@ -62,4 +66,4 @@ export const getPasswordStrengthCssClass = (strength: number) => {
   } else if (strength <= 4) {
     return "border-purple-500";
   }
-}
+};

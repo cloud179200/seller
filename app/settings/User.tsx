@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import tickIOS from "@/app/assets/lottie/tick-ios.json";
 import { getPasswordStrengthCssClass } from "@/app/utils";
+import { IResponseErrorObject } from "../utils/interface";
 
 const useChangePasswordFormControl = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -49,7 +50,7 @@ const useChangePasswordFormControl = () => {
         });
         return;
       }
-      const resJson = await result.json();
+      const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
       toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL, { className: "toast-error"});
     },
   });
@@ -83,7 +84,7 @@ const useChangePasswordFormControl = () => {
   } = formik;
 
   const passwordStrengthClass = useMemo(() => {
-    return getPasswordStrengthCssClass(strength)
+    return getPasswordStrengthCssClass(strength);
   }, [strength]);
 
   const indicatorPassword = (
@@ -240,7 +241,7 @@ const ChangePasswordForm = () => {
           cypressData="confirm_new_password"
         />{" "}
       </div>{" "}
-      <div className="col-start-3 col-end-5 flex items-center justify-center">
+      <div className="col-start-1 col-end-7 flex items-center justify-center md:col-start-3 md:col-end-5">
         <CustomButton type="submit" cypressData="change-password-button" loading={isSubmitting} disabled={!isValid}>
           {" "}
           {NAME_TRANS_EN.CHANGE_PASSWORD}{" "}
@@ -256,15 +257,15 @@ const User = () => {
 
   const userInfo = useMemo(
     () => (
-      <div className="hero-content flex flex-col items-start justify-start">
+      <div className="hero-content flex flex-col items-start justify-start ">
         <img
           src={data?.user?.image || faker.image.avatar()}
-          className="max-w-sm rounded-lg shadow-2xl"
+          className="rounded-lg shadow-2xl sm:max-w-full md:max-w-sm"
           alt="avatar"
         />
-        <div>
-          <h1 className="text-5xl font-bold">{data?.user?.email}</h1>
-          <p className="py-6">{data?.user?.email}</p>
+        <div className="w-full">
+          <h1 className="w-full truncate font-bold md:text-5xl">{data?.user?.email}</h1>
+          <p className="w-full truncate py-6 md:text-base">{data?.user?.name}</p>
         </div>
       </div>
     ),

@@ -20,13 +20,13 @@ export default async function handler(
       throw new Error("invalid key");
     }
 
-    const session = await getServerSession(req, res, authOptions)
+    const session = await getServerSession(req, res, authOptions);
 
     const user = await prisma.user.findUnique({
       where: {
         email: session?.user?.email || ""
       }
-    })
+    });
 
     if (!user) {
       throw new Error("not found user");
@@ -37,7 +37,7 @@ export default async function handler(
         user_id: user.id,
         setting_key: NOTIFICATION_KEYS[key]
       }
-    })
+    });
 
     if (!notificationItem) {
       const newItem: NotificationSettings = {
@@ -45,10 +45,10 @@ export default async function handler(
         user_id: user.id,
         setting_key: NOTIFICATION_KEYS[key],
         setting_value: value
-      }
+      };
       const notificationItemCreated = await prisma.notificationSettings.create({
         data: newItem
-      })
+      });
       if (!notificationItemCreated) {
         throw new Error("create settings failed");
       }
@@ -61,14 +61,14 @@ export default async function handler(
         data: {
           setting_value: value
         }
-      })
+      });
       if (notificationItemUpdated.count === 0) {
         throw new Error("update settings failed");
       }
     }
 
-    res.status(HTTP_RESPONSE_STATUS.OK).json(resSuccessJson())
+    res.status(HTTP_RESPONSE_STATUS.OK).json(resSuccessJson());
   } catch (error: any) {
-    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).json(resErrorJson(error.toString()))
+    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).json(resErrorJson(error.toString()));
   }
 }

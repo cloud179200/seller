@@ -16,6 +16,7 @@ import CustomInput from "@/app/components/custom-input/CustomInput";
 import CustomButton from "@/app/components/custom-button/CustomButton";
 import { API_MESSAGE, HTTP_REQUEST_METHOD, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "@/app/config/constant";
 import { getPasswordStrengthCssClass } from "@/app/utils";
+import { IResponseErrorObject } from "@/app/utils/interface";
 
 const useSignupFormControl = () => {
   const router = useRouter();
@@ -76,16 +77,16 @@ const useSignupFormControl = () => {
         setTimeout(() => {
           router.push("/auth/verify");
         }, 2000);
-        return
+        return;
       }  
       
-      const resJson = await result.json();
+      const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
       toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL);
     },
   });
 
   const passwordStrengthClass = useMemo(() => {
-    return getPasswordStrengthCssClass(strength)
+    return getPasswordStrengthCssClass(strength);
   }, [strength]);
 
   const indicatorPassword = (
@@ -107,8 +108,8 @@ const useSignupFormControl = () => {
   } = formik;
 
   useEffect(() => {
-    changePassword(values.password)
-  }, [values.password])
+    changePassword(values.password);
+  }, [values.password]);
 
   return {
     errors,
@@ -125,8 +126,8 @@ const useSignupFormControl = () => {
     handleClickShowPassword,
     handleClickShowConfirmPassword,
     indicatorPassword
-  }
-}
+  };
+};
 
 const SignUpComponent = () => {
 

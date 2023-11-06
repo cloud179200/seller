@@ -73,6 +73,7 @@
     "@typescript-eslint/no-explicit-any": "off",
     "no-empty-function": "warn",
     "no-explicit-any": "off",
-    "@next/next/no-img-element": "off",
-  }
+  "@next/next/no-img-element": "off"
+  },
+  "root": true
 }

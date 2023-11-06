@@ -1,0 +1,70 @@
+name: Node.js CI with Cypress
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  wait-for-vercel-deployment:
+    runs-on: ubuntu-latest
+    environment:
+      name: CI Process
+    steps:
+      - name: Wait for Vercel Deployment
+        uses: UnlyEd/github-action-await-vercel@v1.2.43
+        id: await-vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          deployment-url: seller-cloud179200.vercel.app
+          timeout: 10
+          poll-interval: 1
+
+      - name: Display deployment status
+        run: |
+          echo "The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
+
+  test:
+    runs-on: ubuntu-latest
+    needs: wait-for-vercel-deployment
+    environment:
+      name: CI Process
+    strategy:
+      matrix:
+        node-version: [18.18.x]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Install Dependencies
+        run: npm install
+        
+      - name: Build Application
+        run: npm run build
+        
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v6
+        with:
+          config-file: cypress.config.ts
+          install: false
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET: ${{ secrets.SECRET }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}

@@ -7,7 +7,7 @@ export default defineConfig({
   env: config,
   supportFolder: "cypress/support",
   e2e: {
-    baseUrl: config.BASE_URL || "http://localhost:3000",
+    baseUrl: config.BASE_URL,
     retries: {
       runMode: 3,
     },

@@ -13,9 +13,10 @@ const Tabs = (props: IProps) => {
       {tabs.map((item) => (
         <a
           key={item.id}
-          className={`tab-bordered tab-lifted tab border-b-0 ${
+          className={`tab tab-lifted tab-bordered border-b-0 ${
             activeId === item.id ? "tab-active" : ""
           }`}
+          data-cy={`tab-${item.id}`}
           onClick={() => onTabClick(item.id)}
         >
           {item.label}

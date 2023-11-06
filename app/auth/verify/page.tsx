@@ -31,7 +31,7 @@ function Verify() {
       return;
     }
 
-    const res = await fetch(`/api/auth/verify`, {
+    const res = await fetch("/api/auth/verify", {
       method: HTTP_REQUEST_METHOD.POST,
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +76,7 @@ function Verify() {
   }
 
   return (
-    <div className="flex min-h-screen flex-wrap flex-col items-center justify-center animate-appearance-once">
+    <div className="flex min-h-screen animate-appearance-once flex-col flex-wrap items-center justify-center">
       <img src={statusContent.image.src} width="20%" alt="status" />
       <h3
         className="mb-2 text-center font-bold text-black"

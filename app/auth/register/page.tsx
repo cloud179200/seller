@@ -57,7 +57,7 @@ const useSignupFormControl = () => {
     validationSchema: signUpSchema,
     onSubmit: async (_values, formikHelpers) => {
       formikHelpers.setSubmitting(true);
-      const result = await fetch("/api/auth/register", {
+      const result = await fetch("api/auth/register", {
         method: HTTP_REQUEST_METHOD.POST,
         headers: {
           "Content-Type": "application/json",
@@ -74,9 +74,9 @@ const useSignupFormControl = () => {
 
       if (result.status === HTTP_RESPONSE_STATUS.OK) {
         setTimeout(() => {
-          router.push("/auth/verify");
+          router.push("auth/verify");
         }, 2000);
-        return
+        return;
       }  
       
       const resJson = await result.json();
@@ -85,7 +85,7 @@ const useSignupFormControl = () => {
   });
 
   const passwordStrengthClass = useMemo(() => {
-    return getPasswordStrengthCssClass(strength)
+    return getPasswordStrengthCssClass(strength);
   }, [strength]);
 
   const indicatorPassword = (
@@ -107,8 +107,8 @@ const useSignupFormControl = () => {
   } = formik;
 
   useEffect(() => {
-    changePassword(values.password)
-  }, [values.password])
+    changePassword(values.password);
+  }, [values.password]);
 
   return {
     errors,
@@ -125,8 +125,8 @@ const useSignupFormControl = () => {
     handleClickShowPassword,
     handleClickShowConfirmPassword,
     indicatorPassword
-  }
-}
+  };
+};
 
 const SignUpComponent = () => {
 
@@ -299,7 +299,7 @@ const SignUpComponent = () => {
                 {" "}
                 <Link
                   className="font-bold text-info hover:underline"
-                  href="/auth/login"
+                  href="auth/login"
                 >
                   {NAME_TRANS_EN.SIGN_IN}
                 </Link>

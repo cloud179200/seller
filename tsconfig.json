@@ -37,7 +37,6 @@
 
   // Exclude files
   "exclude": [
-    "node_modules",
-    "cypress.config.ts"
+    "node_modules"
   ]
 }

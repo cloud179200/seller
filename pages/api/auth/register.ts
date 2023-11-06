@@ -47,7 +47,7 @@ export default async function handler(
           data:{
             token: newEmailVerifyToken
           }
-        })
+        });
 
         
         if (!verificationToken) {
@@ -63,23 +63,23 @@ export default async function handler(
       } catch (error: any) {
         res.status(HTTP_RESPONSE_STATUS.INTERNAL_SERVER_ERROR).send(resErrorJson(error.toString()));
       }
-      return
+      return;
     }
     res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).send("User already exists");
-    return
+    return;
   }
 
 
   if (!dobMomentObject.isValid()) {
     res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).send("Invalid Date");
-    return
+    return;
   }
 
   const emailVerifyToken = await getHashedString(
     email + password + moment().toISOString()
   );
   
-  const hashedPassword = await getHashedString(password)
+  const hashedPassword = await getHashedString(password);
 
   const newUserData: User = {
     id: new ObjectId().toString(),
@@ -101,7 +101,7 @@ export default async function handler(
     token: emailVerifyToken,
     user_id: "",
     expires: null
-  }
+  };
 
   try {
     const user = await prisma.user.create({
@@ -114,7 +114,7 @@ export default async function handler(
 
     const verificationToken = await prisma.verificationToken.create({
       data: { ...newVerificationData, user_id: user.id }
-    })
+    });
 
     if (!verificationToken) {
       throw new Error("Create verification token failed");

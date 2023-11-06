@@ -16,7 +16,7 @@ const ProfileSection = () => {
     () => data?.user?.image || faker.image.avatar(),
     [data?.user?.email]
   );
-  const MENU_INDEX = useMemo(() => faker.number.int({ min: 0, max: 1000 }), [])
+  const MENU_INDEX = useMemo(() => faker.number.int({ min: 0, max: 1000 }), []);
 
   const handleLogout = async () => {
     if (status === NEXT_AUTH_STATUS.AUTHENTICATED) {
@@ -40,13 +40,13 @@ const ProfileSection = () => {
   return (
     <>
       {/* Avatar and dropdown */}
-      <div className="dropdown-end dropdown">
-        <label data-cy="menu-button" tabIndex={MENU_INDEX} className="btn-ghost btn-circle avatar btn">
+      <div className="dropdown dropdown-end">
+        <label data-cy="menu-button" tabIndex={MENU_INDEX} className="avatar btn btn-circle btn-ghost">
           <div className="w-10 rounded-full">
             <img src={avatarURL} title="avatar" alt="avatar"/>
           </div>
         </label>
-        <ul tabIndex={MENU_INDEX} className="dropdown-content menu rounded-box menu-sm mt-3 w-52 bg-base-100 p-2 shadow">
+        <ul tabIndex={MENU_INDEX} className="menu dropdown-content rounded-box menu-sm mt-3 w-52 bg-base-100 p-2 shadow">
           {/* <div className="card-body p-0">
             <h3 className="card-title">{data?.user?.email || ""}</h3>
             <p>{helloContent}</p>

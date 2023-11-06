@@ -11,7 +11,7 @@ export default async function handler(
 
   if (!emailVerifyToken) {
     res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).send(resErrorJson("Not found token"));
-    return
+    return;
   }
   
   try {
@@ -19,7 +19,7 @@ export default async function handler(
       where:{
         token: emailVerifyToken
       }
-    })
+    });
 
     if(!verificationTokenDeleted){
       throw new Error("Token expired");

@@ -11,7 +11,6 @@ import { NotificationSettings } from "@prisma/client";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import tickIOS from "@/app/assets/lottie/tick-ios.json";
-import { IResponseErrorObject, IResponseSuccessObject } from "../utils/interface";
 
 const useNotificationSettings = () => {
   const [listNotificationSetting, setListNotificationSetting] = useState<NotificationSettings[]>([]);
@@ -52,7 +51,7 @@ const useNotificationSettings = () => {
       getNotificationsSetting();
       return;
     }
-    const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
+    const resJson = await result.json();
     toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL, {
       className: "toast-error",
     });
@@ -65,11 +64,11 @@ const useNotificationSettings = () => {
     });
     setIsLoading(false);
     if (result.status === HTTP_RESPONSE_STATUS.OK) {
-      const resJson: IResponseSuccessObject<NotificationSettings> = (await result.json()) as unknown as IResponseSuccessObject<NotificationSettings>;
-      setListNotificationSetting(resJson.data as NotificationSettings[]);
+      const resJson = await result.json();
+      setListNotificationSetting(resJson.data);
       return;
     }
-    const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
+    const resJson = await result.json();
     toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL, {
       className: "toast-error",
     });

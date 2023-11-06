@@ -14,15 +14,15 @@ export default async function handler(
       try {
         // Create Checkout Sessions from body params.
         const session = await stripeInit.checkout.sessions.create({
-          ui_mode: 'embedded',
+          ui_mode: "embedded",
           line_items: [
             {
               // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-              price: 'pr_123',
+              price: "pr_123",
               quantity: 1,
             },
           ],
-          mode: 'payment',
+          mode: "payment",
           return_url: `${req.headers.origin}/return?session_id={CHECKOUT_SESSION_ID}`,
         });
 
@@ -30,6 +30,7 @@ export default async function handler(
       } catch (error: any) {
         res.status(HTTP_RESPONSE_STATUS.INTERNAL_SERVER_ERROR).json(resErrorJson(error.toString()));
       }
+      break;
     case HTTP_REQUEST_METHOD.GET:
       try {
         const session = await stripeInit.checkout.sessions.retrieve(req.query["session_id"]?.toString() || "");
@@ -41,8 +42,9 @@ export default async function handler(
       } catch (error: any) {
         res.status(HTTP_RESPONSE_STATUS.INTERNAL_SERVER_ERROR).json(resErrorJson(error.toString()));
       }
+      break;
     default:
-      res.setHeader('Allow', req.method || "");
-      res.status(HTTP_RESPONSE_STATUS.METHOD_NOT_ALLOWED).end('Method Not Allowed');
+      res.setHeader("Allow", req.method || "");
+      res.status(HTTP_RESPONSE_STATUS.METHOD_NOT_ALLOWED).end("Method Not Allowed");
   }
 }

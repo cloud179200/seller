@@ -16,7 +16,6 @@ import CustomInput from "@/app/components/custom-input/CustomInput";
 import CustomButton from "@/app/components/custom-button/CustomButton";
 import { API_MESSAGE, HTTP_REQUEST_METHOD, HTTP_RESPONSE_STATUS, NAME_TRANS_EN } from "@/app/config/constant";
 import { getPasswordStrengthCssClass } from "@/app/utils";
-import { IResponseErrorObject } from "@/app/utils/interface";
 
 const useSignupFormControl = () => {
   const router = useRouter();
@@ -58,7 +57,7 @@ const useSignupFormControl = () => {
     validationSchema: signUpSchema,
     onSubmit: async (_values, formikHelpers) => {
       formikHelpers.setSubmitting(true);
-      const result = await fetch("/api/auth/register", {
+      const result = await fetch("api/auth/register", {
         method: HTTP_REQUEST_METHOD.POST,
         headers: {
           "Content-Type": "application/json",
@@ -75,12 +74,12 @@ const useSignupFormControl = () => {
 
       if (result.status === HTTP_RESPONSE_STATUS.OK) {
         setTimeout(() => {
-          router.push("/auth/verify");
+          router.push("auth/verify");
         }, 2000);
         return;
       }  
       
-      const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
+      const resJson = await result.json();
       toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL);
     },
   });
@@ -300,7 +299,7 @@ const SignUpComponent = () => {
                 {" "}
                 <Link
                   className="font-bold text-info hover:underline"
-                  href="/auth/login"
+                  href="auth/login"
                 >
                   {NAME_TRANS_EN.SIGN_IN}
                 </Link>

@@ -1,5 +1,3 @@
-import { IResponseSuccessObject, IResponseErrorObject } from "./interface";
-
 export const _sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
@@ -29,7 +27,10 @@ export const fileToBase64 = (file: File) =>
     reader.onerror = (error) => reject(error);
   });
 
-export const resSuccessJson: (message?: string, data?: object | Array<any> | boolean) => IResponseSuccessObject = (message = "Success", data = true) => {
+export const resSuccessJson: (message?: string, data?: any) => {
+  data: any;
+  message: string;
+} = (message = "Success", data = true) => {
   return {
     data,
     message
@@ -37,7 +38,7 @@ export const resSuccessJson: (message?: string, data?: object | Array<any> | boo
 };
 
 
-export const resErrorJson: (message?: string) => IResponseErrorObject = (message = "Error") => {
+export const resErrorJson: (message?: string) => { error: number, message: string } = (message = "Error") => {
   return {
     error: 1,
     message

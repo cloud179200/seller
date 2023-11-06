@@ -14,7 +14,6 @@ import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import tickIOS from "@/app/assets/lottie/tick-ios.json";
 import { getPasswordStrengthCssClass } from "@/app/utils";
-import { IResponseErrorObject } from "../utils/interface";
 
 const useChangePasswordFormControl = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -31,7 +30,7 @@ const useChangePasswordFormControl = () => {
     validationSchema: changePasswordSchema,
     onSubmit: async (_values, formikHelpers) => {
       formikHelpers.setSubmitting(true);
-      const result = await fetch("/api/auth/change-password", {
+      const result = await fetch("api/auth/change-password", {
         method:HTTP_REQUEST_METHOD.POST,
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +49,7 @@ const useChangePasswordFormControl = () => {
         });
         return;
       }
-      const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
+      const resJson = await result.json();
       toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL, { className: "toast-error"});
     },
   });

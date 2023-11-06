@@ -22,7 +22,6 @@ model User {
   phone_number         String
   gender               Boolean
   VerificationToken    VerificationToken[]
-  NotificationSettings NotificationSettings[]
 }
 
 model VerificationToken {
@@ -40,5 +39,4 @@ model NotificationSettings {
   user_id       String @db.ObjectId
   setting_key   String
   setting_value Boolean
-  user          User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

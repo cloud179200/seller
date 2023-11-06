@@ -10,6 +10,7 @@ import { API_MESSAGE, HTTP_REQUEST_METHOD, HTTP_RESPONSE_STATUS } from "@/app/co
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import tickIOS from "@/app/assets/lottie/tick-ios.json";
+import { IResponseErrorObject } from "@/app/utils/interface";
 
 const stripePromise = loadStripe(
   config.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""

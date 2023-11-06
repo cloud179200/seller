@@ -1,4 +1,4 @@
-export interface IResponseSuccessObject<T> {
+export interface IResponseSuccessObject<T = any> {
   data: T | Array<T> | boolean;
   message: string;
 }

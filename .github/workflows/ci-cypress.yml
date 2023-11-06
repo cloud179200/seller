@@ -34,6 +34,7 @@ jobs:
       - name: Run E2E tests
         uses: cypress-io/github-action@v6
         with:
+          start: npm start -- -p 3000
           config-file: cypress.config.ts
           install: false
         env:

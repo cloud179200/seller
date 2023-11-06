@@ -45,7 +45,7 @@ const useBoards = (activeId: string) => {
     }
 
     if (activeId === TABS.NOTIFICATIONS.id) {
-      return <Notification />
+      return <Notification />;
     }
 
     if (activeId === TABS.PAYMENT.id) {
@@ -65,7 +65,7 @@ const page = () => {
     <CustomBox>
       <div className="flex min-h-[80vh] flex-wrap items-start justify-start p-4">
         <div className="ml-2 w-full">{sideBar}</div>
-        <div className="md:h-[80vh] w-full grow rounded-lg border-2 bg-base-100">
+        <div className="w-full grow rounded-lg border-2 bg-base-100 md:h-[80vh]">
           {boards}
         </div>
       </div>

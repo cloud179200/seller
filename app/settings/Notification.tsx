@@ -11,10 +11,11 @@ import { NotificationSettings } from "@prisma/client";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import tickIOS from "@/app/assets/lottie/tick-ios.json";
+import { IResponseErrorObject, IResponseSuccessObject } from "../utils/interface";
 
 const useNotificationSettings = () => {
   const [listNotificationSetting, setListNotificationSetting] = useState<NotificationSettings[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleSetNotificationSetting: React.ChangeEventHandler<HTMLInputElement> = async (e) => {
     setIsLoading(true);
     const result = await fetch("/api/setting/set-notification", {
@@ -40,13 +41,18 @@ const useNotificationSettings = () => {
         ),
         duration: 1500,
       });
-      setListNotificationSetting(prevList => {
-        const newList = prevList.map(item => item.setting_key === e.target.name ? {...item, setting_value: !item.setting_value } : item)
-        return newList;
-      })
+      const targetItem = listNotificationSetting.find(item => item.setting_key === e.target.name);
+      if (targetItem) {
+        setListNotificationSetting(prevList => {
+          const newList = prevList.map(item => item.setting_key === e.target.name ? { ...item, setting_value: !item.setting_value } : item);
+          return newList;
+        });
+        return;
+      }
+      getNotificationsSetting();
       return;
     }
-    const resJson = await result.json();
+    const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
     toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL, {
       className: "toast-error",
     });
@@ -59,11 +65,11 @@ const useNotificationSettings = () => {
     });
     setIsLoading(false);
     if (result.status === HTTP_RESPONSE_STATUS.OK) {
-      const resJson = await result.json();
-      setListNotificationSetting(resJson.data as unknown as NotificationSettings[])
+      const resJson: IResponseSuccessObject<NotificationSettings> = (await result.json()) as unknown as IResponseSuccessObject<NotificationSettings>;
+      setListNotificationSetting(resJson.data as NotificationSettings[]);
       return;
     }
-    const resJson = await result.json();
+    const resJson: IResponseErrorObject = (await result.json()) as unknown as IResponseErrorObject;
     toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL, {
       className: "toast-error",
     });
@@ -89,11 +95,12 @@ const Notification = () => {
     });
 
     return listFormatted.map((item) => (
-      <CustomBox key={item.value} className="max-h-[68px] col-span-12 border-[1px]">
+      <CustomBox key={item.value} className="col-span-12 max-h-[68px] border-[1px]">
         <div className="form-control p-4">
           <label className="label cursor-pointer">
             <span className="label-text capitalize">{item.label}</span>
             <input
+              data-cy={`checkbox-${item.value}`}
               type="checkbox"
               className="toggle"
               checked={item.checked}
@@ -108,7 +115,7 @@ const Notification = () => {
   }, [listNotificationSetting]);
 
   useEffect(() => {
-    getNotificationsSetting()
+    getNotificationsSetting();
   }, []);
 
   return <div className="h-[80vh] w-full">

@@ -38,12 +38,10 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
-          BASE_URL: ${{ secrets.BASE_URL_PRODUCTION }}
+          BASE_URL: ${{ secrets.BASE_URL }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL_PRODUCTION }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET_PRODUCTION }}
         
       - name: Run E2E tests
         uses: cypress-io/github-action@v6
@@ -59,12 +57,10 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
-          BASE_URL: ${{ secrets.BASE_URL_PRODUCTION }}
+          BASE_URL: ${{ secrets.BASE_URL }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
   deploy:
       runs-on: ubuntu-latest
       needs: tests-e2e

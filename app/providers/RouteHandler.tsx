@@ -50,7 +50,7 @@ function RouteHandler(props: IProps) {
         dispatch(utilsActions[utilsActionsName.SET_LOADING_COMMON_ACTION]({ state: false }));
         toast.remove(NEXT_AUTH_STATUS.LOADING);
         if (isPrivatePath) {
-          router.replace("auth/login");
+          router.replace("/auth/login");
         }
         break;
       default:

@@ -74,7 +74,7 @@ const useSignupFormControl = () => {
 
       if (result.status === HTTP_RESPONSE_STATUS.OK) {
         setTimeout(() => {
-          router.push("auth/verify");
+          router.push("/auth/verify");
         }, 2000);
         return;
       }  
@@ -299,7 +299,7 @@ const SignUpComponent = () => {
                 {" "}
                 <Link
                   className="font-bold text-info hover:underline"
-                  href="auth/login"
+                  href="/auth/login"
                 >
                   {NAME_TRANS_EN.SIGN_IN}
                 </Link>

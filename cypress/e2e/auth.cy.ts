@@ -45,11 +45,11 @@ describe('Login', () => {
 describe('Register', () => {
 
   before(() => {
+    cy.task("resetRegister");
     cy.visit('/auth/register');
   });
 
   it('Should request register with success email sent', () => {
-    cy.task("resetRegister");
     cy.get('[data-cy="first-name"]').type(TESTING_DATA.USER_FIRST_NAME)
     cy.get('[data-cy="last-name"]').type(TESTING_DATA.USER_LAST_NAME)
     cy.get('[data-cy="email"]').type(TESTING_DATA.USER_EMAIL)
@@ -95,7 +95,10 @@ describe('Change password', () => {
     cy.get('[data-cy="confirm_new_password"]').type(TESTING_DATA.USER_PASSWORD+"@");
     cy.get('[data-cy="change-password-button"]').click();
 
-    cy.get('.toast-success > div').last().should('contain', API_MESSAGE.UPDATE_SUCCESS);;
+    cy.get('.toast-success > div').last().should('contain', API_MESSAGE.UPDATE_SUCCESS);
+    cy.get('[data-cy="menu-button"]').click();
+    cy.get('[data-cy="logout-button"]').click();
+    cy.url().should('include', '/auth/login');
   });
 
   it('Should change password fail', () => {
@@ -111,11 +114,14 @@ describe('Change password', () => {
     cy.get('[data-cy="settings-button"]').click();
     cy.url().should('include', '/settings');
 
-    cy.get('[data-cy="old_password"]').type(TESTING_DATA.USER_PASSWORD+"@tehe");
+    cy.get('[data-cy="old_password"]').type(TESTING_DATA.USER_PASSWORD+"@...");
     cy.get('[data-cy="new_password"]').type(TESTING_DATA.USER_PASSWORD);
     cy.get('[data-cy="confirm_new_password"]').type(TESTING_DATA.USER_PASSWORD);
     cy.get('[data-cy="change-password-button"]').click();
 
     cy.get('.toast-error > div').last().should('be.visible')
+    cy.get('[data-cy="menu-button"]').click();
+    cy.get('[data-cy="logout-button"]').click();
+    cy.url().should('include', '/auth/login');
   });
 });

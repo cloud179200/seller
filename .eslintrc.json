@@ -75,6 +75,5 @@
     "no-explicit-any": "off",
     "@next/next/no-img-element": "off"
   },
-  "include": ["./"],
   "root": true
 }

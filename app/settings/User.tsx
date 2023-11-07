@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useMemo, useState } from "react";
 import { usePrevious } from "@reactuses/core";
 import { faker } from "@faker-js/faker";

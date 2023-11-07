@@ -35,6 +35,7 @@
       }
     }
   },
+  "ignorePatterns": ["next.config.js"],
   "plugins": ["react", "import", "@typescript-eslint"],
   "rules": {
     "semi": ["error", "always"],

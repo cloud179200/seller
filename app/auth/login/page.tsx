@@ -173,7 +173,7 @@ const SignInComponent = () => {
                     </label>
                   </div>
                   <Link
-              prefetch={false} 
+               
                     className="text-sm font-bold text-info hover:underline"
                     href="#"
                   >
@@ -204,7 +204,7 @@ const SignInComponent = () => {
                   {NAME_TRANS_EN.DONT_HAVE_ACCOUNT}
                   {" "}
                   <Link
-              prefetch={false}
+              
                     className="font-bold text-info hover:underline"
                     href="/auth/register"
                   >

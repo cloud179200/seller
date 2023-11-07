@@ -54,7 +54,7 @@ function Verify() {
             <>
               {NAME_TRANS_EN.VERIFY_EMAIL_FAILED}.<br /> Please Connect Email
               Support: <Link
-              prefetch={false} href="mailto:tehe@gmail.com">tehe@gmail.com</Link>.
+               href="mailto:tehe@gmail.com">tehe@gmail.com</Link>.
             </>
           ),
         });
@@ -87,7 +87,7 @@ function Verify() {
       </h3>
       {statusContent.content !== STATUS_VERIFY_EMAIL.SENT && (
         <Link
-              prefetch={false}
+              
           className="font-bold text-info hover:underline"
           type="button"
           href="/auth/login"

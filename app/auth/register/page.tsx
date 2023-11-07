@@ -298,7 +298,7 @@ const SignUpComponent = () => {
                 {NAME_TRANS_EN.ALREADY_HAVE_ACCOUNT}
                 {" "}
                 <Link
-              prefetch={false}
+              
                   className="font-bold text-info hover:underline"
                   href="/auth/login"
                 >

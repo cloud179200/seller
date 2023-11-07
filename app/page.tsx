@@ -9,7 +9,7 @@ export default function Home() {
         <div className="mb-6 grid grid-cols-2 gap-2">
           <div className="col-span-2 md:col-span-1">
             <Link
-              prefetch={false}
+              
               href="/auth/login"
               className="btn btn-info btn-wide mx-2"
             >
@@ -18,7 +18,7 @@ export default function Home() {
           </div>
           <div className="col-span-2 md:col-span-1">
             <Link
-              prefetch={false}
+              
               href="/auth/register"
               className="btn btn-secondary btn-wide mx-2"
             >

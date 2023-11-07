@@ -27,7 +27,7 @@ const Header = ({
             {enabledHandleLeftDrawer ? <button className="btn btn-circle btn-ghost" onClick={handleLeftDrawerToggle}>
               {open ? <TbCircleArrowLeft className="h-5 w-5" /> : <TbMenu2 className="h-5 w-5" />}
             </button> : <Link
-              prefetch={false} href="/dashboard" className="btn btn-circle btn-ghost"><TbHome className="h-5 w-5" /></Link>}
+               href="/dashboard" className="btn btn-circle btn-ghost"><TbHome className="h-5 w-5" /></Link>}
           </div>
         </div>
         {/* <div className="navbar-center">

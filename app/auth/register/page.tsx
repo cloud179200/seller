@@ -57,7 +57,7 @@ const useSignupFormControl = () => {
     validationSchema: signUpSchema,
     onSubmit: async (_values, formikHelpers) => {
       formikHelpers.setSubmitting(true);
-      const result = await fetch("api/auth/register", {
+      const result = await fetch("/api/auth/register", {
         method: HTTP_REQUEST_METHOD.POST,
         headers: {
           "Content-Type": "application/json",

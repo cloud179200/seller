@@ -52,7 +52,8 @@ const ProfileSection = () => {
             <p>{helloContent}</p>
           </div> */}
           <li className="my-1">
-            <Link data-cy="settings-button" href="/settings">
+            <Link
+              prefetch={false} data-cy="settings-button" href="/settings">
               <TbSettings className="h-5 w-5" />&nbsp;Settings
             </Link></li>
           <li className="my-1">

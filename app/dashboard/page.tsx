@@ -1,14 +1,14 @@
-"use client"
-import React from 'react'
-import dynamic from 'next/dynamic';
-import { useSession } from 'next-auth/react'
-import { NEXT_AUTH_STATUS } from '@/app/config/constant'
-import CustomBox from '@/app/components/custom-box/CustomBox'
-const LoadingComponent = dynamic(() => import('@/app/components/Loading'))
+"use client";
+import React from "react";
+import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
+import { NEXT_AUTH_STATUS } from "@/app/config/constant";
+import CustomBox from "@/app/components/custom-box/CustomBox";
+const LoadingComponent = dynamic(() => import("@/app/components/Loading"));
 
 const page = () => {
 
-  const { data, status } = useSession()
+  const { data, status } = useSession();
 
   const render = () => {
 
@@ -17,21 +17,21 @@ const page = () => {
         <>
           <div data-cy="email-display">Signed in with {data?.user?.email} </div>
         </>
-      )
+      );
     }
 
     return (
       <>
         <LoadingComponent />
       </>
-    )
-  }
+    );
+  };
 
   return <CustomBox>
     <div className="p-4">
       {render()}
     </div>
-  </CustomBox>
-}
+  </CustomBox>;
+};
 
-export default page
+export default page;

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import * as actionTypes from "./actions";
-import _ from "underscore"
+import _ from "underscore";
 
 export interface IUserState {
   userInfo: any | null,
@@ -10,14 +11,14 @@ export interface IUserState {
 const initialState: IUserState = {
   userInfo: null,
   userDetail: null,
-}
+};
 const userSlice = createSlice({
   name: "user",
   initialState: _.clone(initialState),
   reducers: {
     [actionTypes.SET_USER_ACTION]: (state, action: PayloadAction<any>) => {
-      state = _.clone(initialState)
-      state.userInfo = { ...action.payload }
+      state = _.clone(initialState);
+      state.userInfo = { ...action.payload };
     }
   }
 });

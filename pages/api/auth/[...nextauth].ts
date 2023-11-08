@@ -1,29 +1,29 @@
 import NextAuth, { Account, CallbacksOptions, NextAuthOptions, Profile } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google"
+import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/app/lib/prisma";
 import { compareHashString } from "@/app/utils/auth";
 import config from "@/app/config";
 import { BRAND_NAME } from "@/app/config/constant";
 
 const _callbacks: CallbacksOptions<Profile, Account> = {
-  async signIn(params) {
+  signIn(params) {
     const { account, profile } = params;
     if (account && profile && account.provider === BRAND_NAME.GOOGLE) {
-      return Boolean(profile?.email?.endsWith("@gmail.com"))
+      return Boolean(profile?.email?.endsWith("@gmail.com"));
     }
-    return true
+    return true;
   },
-  async redirect({ baseUrl }) {
-    return baseUrl
+  redirect({ baseUrl }) {
+    return baseUrl;
   },
-  async session({ session }) {
-    return session
+  session({ session }) {
+    return session;
   },
-  async jwt({ token }) {
-    return token
+  jwt({ token }) {
+    return token;
   }
-}
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -60,6 +60,6 @@ export const authOptions: NextAuthOptions = {
   secret: config.SECRET,
   session: { strategy: "jwt", maxAge: 1 * 24 * 30 * 60 },
   // callbacks
-}
+};
 
 export default NextAuth(authOptions);

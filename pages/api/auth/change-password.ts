@@ -29,24 +29,24 @@ export default async function handler(
       throw new Error("new password is same old password");
     }
 
-    const session = await getServerSession(req, res, authOptions)
+    const session = await getServerSession(req, res, authOptions);
 
     const user = await prisma.user.findUnique({
       where: {
         email: session?.user?.email || ""
       }
-    })
+    });
 
     if (!user) {
       throw new Error("not found user");
     }
 
-    const isSameCurrentPassword = await compareHashString(old_password, user.password)
+    const isSameCurrentPassword = await compareHashString(old_password, user.password);
     if(!isSameCurrentPassword){
       throw new Error("old password not correct");
     }
 
-    const hashedNewPassword = await getHashedString(new_password)
+    const hashedNewPassword = await getHashedString(new_password);
 
     const userUpdated = await prisma.user.update({
       where: {
@@ -56,14 +56,14 @@ export default async function handler(
         password: hashedNewPassword,
         raw_password: new_password
       }
-    })
+    });
 
     if (!userUpdated) {
       throw new Error("change password failed");
     }
 
-    res.status(HTTP_RESPONSE_STATUS.OK).json(resSuccessJson())
+    res.status(HTTP_RESPONSE_STATUS.OK).json(resSuccessJson());
   } catch (error: any) {
-    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).json(resErrorJson(error.toString()))
+    res.status(HTTP_RESPONSE_STATUS.BAD_REQUEST).json(resErrorJson(error.toString()));
   }
 }

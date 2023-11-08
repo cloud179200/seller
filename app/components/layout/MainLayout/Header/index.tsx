@@ -24,9 +24,10 @@ const Header = ({
       <div className="navbar rounded-br-xl bg-base-300 shadow-md">
         <div className="navbar-start">
           <div className="dropdown">
-            {enabledHandleLeftDrawer ? <button className="btn-ghost btn-circle btn" onClick={handleLeftDrawerToggle}>
+            {enabledHandleLeftDrawer ? <button className="btn btn-circle btn-ghost" onClick={handleLeftDrawerToggle}>
               {open ? <TbCircleArrowLeft className="h-5 w-5" /> : <TbMenu2 className="h-5 w-5" />}
-            </button> : <Link href="/dashboard" className="btn-ghost btn-circle btn"><TbHome className="h-5 w-5" /></Link>}
+            </button> : <Link
+               href="/dashboard" className="btn btn-circle btn-ghost"><TbHome className="h-5 w-5" /></Link>}
           </div>
         </div>
         {/* <div className="navbar-center">

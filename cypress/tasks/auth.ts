@@ -1,6 +1,6 @@
-import prisma from '@/app/lib/prisma';
-import { User, VerificationToken } from '@prisma/client';
-import { TESTING_DATA } from '@/app/config/test';
+import prisma from "@/app/lib/prisma";
+import { User, VerificationToken } from "@prisma/client";
+import { TESTING_DATA } from "@/app/config/test";
 import moment from "moment";
 import { ObjectId } from "mongodb";
 
@@ -24,7 +24,7 @@ const testVerificationToken: VerificationToken = {
   token: TESTING_DATA.EMAIL_VERIFY_TOKEN,
   user_id: "",
   expires: null
-}
+};
 
 export const resetLogin = async () => {
   try {
@@ -39,7 +39,7 @@ export const resetLogin = async () => {
   } catch (error) {
     return error;
   }
-}
+};
 
 export const resetRegister = async () => {
   try {
@@ -58,7 +58,7 @@ export const resetRegister = async () => {
   } catch (error) {
     return error;
   }
-}
+};
 
 export const resetEmailVerification = async () => {
   try {
@@ -85,4 +85,4 @@ export const resetEmailVerification = async () => {
   } catch (error) {
     return error;
   }
-}
+};

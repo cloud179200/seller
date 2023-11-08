@@ -76,16 +76,16 @@ const useSignupFormControl = () => {
         setTimeout(() => {
           router.push("/auth/verify");
         }, 2000);
-        return
-      }  
-      
+        return;
+      }
+
       const resJson = await result.json();
       toast.error(resJson.message || API_MESSAGE.UPDATE_FAIL);
     },
   });
 
   const passwordStrengthClass = useMemo(() => {
-    return getPasswordStrengthCssClass(strength)
+    return getPasswordStrengthCssClass(strength);
   }, [strength]);
 
   const indicatorPassword = (
@@ -107,8 +107,8 @@ const useSignupFormControl = () => {
   } = formik;
 
   useEffect(() => {
-    changePassword(values.password)
-  }, [values.password])
+    changePassword(values.password);
+  }, [values.password]);
 
   return {
     errors,
@@ -125,8 +125,8 @@ const useSignupFormControl = () => {
     handleClickShowPassword,
     handleClickShowConfirmPassword,
     indicatorPassword
-  }
-}
+  };
+};
 
 const SignUpComponent = () => {
 
@@ -297,9 +297,10 @@ const SignUpComponent = () => {
               <p className="text-sm text-neutral-content">
                 {NAME_TRANS_EN.ALREADY_HAVE_ACCOUNT}
                 {" "}
-                <Link
+                <Link href={{
+                  pathname: "/auth/login"
+                }}
                   className="font-bold text-info hover:underline"
-                  href="/auth/login"
                 >
                   {NAME_TRANS_EN.SIGN_IN}
                 </Link>

@@ -25,12 +25,12 @@ function CustomInput(props: IProps) {
         <input
           type="text"
           placeholder="Type here"
-          className={`input-bordered input ${errorClass} w-full`}
+          className={`input input-bordered ${errorClass} w-full`}
           data-cy={cypressData || ""}
           {...restProps}
         />
         {endIcon && (
-          <span className="btn-ghost btn-sm btn-circle btn absolute right-0 top-2 mr-3 flex items-center">
+          <span className="btn btn-circle btn-ghost btn-sm absolute right-0 top-2 mr-3 flex items-center">
             <button className="focus:outline-none" onClick={onEndIconClick}>
               {endIcon}
             </button>

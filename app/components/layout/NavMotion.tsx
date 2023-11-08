@@ -1,6 +1,6 @@
-"use client"
-import React from 'react';
-import { motion } from 'framer-motion';
+"use client";
+import React from "react";
+import { motion } from "framer-motion";
 
 const NavMotion = ({ children }: { children: React.ReactNode }) => {
     const motionVariants = {
@@ -19,8 +19,8 @@ const NavMotion = ({ children }: { children: React.ReactNode }) => {
     };
 
     const motionTransition = {
-        type: 'tween',
-        ease: 'anticipate',
+        type: "tween",
+        ease: "anticipate",
         duration: 0.4
     };
 

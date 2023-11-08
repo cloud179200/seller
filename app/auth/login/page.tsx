@@ -17,7 +17,7 @@ const useSigninFormControl = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     setShowPassword(!showPassword);
   };
 
@@ -172,7 +172,8 @@ const SignInComponent = () => {
                       <span className="label-text">Remember me</span>
                     </label>
                   </div>
-                  <Link 
+                  <Link
+               
                     className="text-sm font-bold text-info hover:underline"
                     href="#"
                   >
@@ -183,7 +184,7 @@ const SignInComponent = () => {
                   {NAME_TRANS_EN.SIGN_IN}
                 </CustomButton>
                 <CustomButton
-                  className="btn-info btn-outline btn-block btn mt-2"
+                  className="btn btn-info btn-outline btn-block mt-2"
                   type="button"
                   onClick={handleGoogleLogin}
                   disabled={isSubmitting}
@@ -202,9 +203,10 @@ const SignInComponent = () => {
                 <p className="text-sm text-neutral-content">
                   {NAME_TRANS_EN.DONT_HAVE_ACCOUNT}
                   {" "}
-                  <Link
-                    className="font-bold text-info hover:underline"
-                    href="/auth/register"
+                  <Link className="font-bold text-info hover:underline"
+                    href={{
+                      pathname: "/auth/register"
+                    }}
                   >
                     {NAME_TRANS_EN.SIGN_UP}
                   </Link>

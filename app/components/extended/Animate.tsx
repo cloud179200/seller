@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { forwardRef } from "react";
 import { HTMLMotionProps, motion, useCycle } from "framer-motion";
 
@@ -27,7 +27,7 @@ const Animate = forwardRef<any, IProps>(({ type = "scale", offset = 10, directio
         {...animateWhenInViewProps}
       >
         {children}
-      </motion.div >
+      </motion.div >;
       break;
     case "slide":
       return <motion.div
@@ -43,7 +43,7 @@ const Animate = forwardRef<any, IProps>(({ type = "scale", offset = 10, directio
         {...animateWhenInViewProps}
       >
         {children}
-      </motion.div >
+      </motion.div >;
     default:
       break;
   }

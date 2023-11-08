@@ -11,7 +11,7 @@ import moment from "moment";
 import { formatCreditCardNumber } from "@/app/utils";
 interface ICard {
   cardId: string;
-  type: "visa" | "mastercard" | "jcb" | "americanexpress" | string;
+  type: string;
   expDate: string;
 }
 interface IPropsCard extends ICard {
@@ -47,21 +47,20 @@ const Card = memo((props: IPropsCard) => {
       onClick={
         !isDefault && !isCardExpired ? () => onSetDefault(cardId) : undefined
       }
-      className={`badge badge-lg rounded-md font-medium ${
-        isDefault
-          ? "badge-success cursor-none animate-bounce-once"
+      className={`badge badge-lg rounded-md font-medium ${isDefault
+          ? "badge-success animate-bounce-once cursor-none"
           : isCardExpired
-          ? "badge-error cursor-not-allowed animate-appearance-once"
-          : "cursor-pointer border-0 border-black hover:underline animate-appearance-once"
-      } truncate`}
+            ? "badge-error animate-appearance-once cursor-not-allowed"
+            : "animate-appearance-once cursor-pointer border-0 border-black hover:underline"
+        } truncate`}
     >
       {isDefault ? "Default" : isCardExpired ? "Expired" : "Set as default"}
     </div>
   );
 
   return (
-    <CustomBox className="mb-2 grid h-[calc(68px + 2rem)] grid-cols-12 gap-x-2 border-[1px] p-4">
-      <div className="col-span-2 flex items-center justify-center">
+    <CustomBox className="mb-2 grid h-[calc(68px+2rem)] grid-cols-12 gap-x-3 gap-y-2 border-[1px] p-4">
+      <div className="col-span-3 flex items-center justify-center md:col-span-2">
         <CustomBox className="flex h-[50px] w-[80px] items-center justify-center shadow-none hover:shadow-none">
           <img
             src={logo}
@@ -72,7 +71,7 @@ const Card = memo((props: IPropsCard) => {
           />
         </CustomBox>
       </div>
-      <div className="col-span-6 grid grid-rows-2 gap-2">
+      <div className="col-span-9 grid grid-rows-2 gap-2 md:col-span-6">
         <div className="row-span-1 font-bold">
           {formatCreditCardNumber(cardId)}
         </div>
@@ -80,18 +79,18 @@ const Card = memo((props: IPropsCard) => {
           Exp. date {moment(expDate).format("MM/YY")}
         </div>
       </div>
-      <div className="col-span-2 flex items-center justify-center">
+      <div className="col-span-8 flex items-center justify-center md:col-span-2">
         {statusBadge}
       </div>
-      <div className="col-span-2 flex items-center justify-center">
+      <div className="col-span-4 flex items-center justify-center md:col-span-2">
         {!isDefault && (
           <button
-            className="btn-ghost btn hover:bg-[transparent]"
+            className="btn btn-ghost hover:bg-[transparent]"
             onClick={() => onRemove(cardId)}
           >
             <TbTrashXFilled
               size="1.5rem"
-              className="transition-all duration-200 hover:text-error animate-appearance-once"
+              className="animate-appearance-once transition-all duration-200 hover:text-error"
             />
           </button>
         )}
@@ -128,7 +127,7 @@ const useCards = () => {
           onSetDefault: handleSetDefault,
         };
       })
-      .slice(0, 5);
+      .slice(0, 20);
     setListCard(newListCard);
   }, []);
 
@@ -141,7 +140,7 @@ function Payment() {
   return (
     <div className="grid grid-cols-12 gap-2 p-2">
       <div
-        className={"overflow-overlay col-span-6"}
+        className="overflow-overlay col-span-12 md:col-span-6"
         style={{ height: heightCardsContainer }}
       >
         <CustomBox className="p-4 shadow-none hover:shadow-none">
@@ -150,7 +149,7 @@ function Payment() {
           ))}
         </CustomBox>
       </div>
-      <div className="col-span-6"></div>
+      <div className="overflow-overlay col-span-12 md:col-span-6"></div>
     </div>
   );
 }

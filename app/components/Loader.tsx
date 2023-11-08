@@ -1,5 +1,5 @@
-import React from 'react';
-import CustomBox from './custom-box/CustomBox';
+import React from "react";
+import CustomBox from "./custom-box/CustomBox";
 
 // ==============================|| LOADER ||============================== //
 const Loader = () => (

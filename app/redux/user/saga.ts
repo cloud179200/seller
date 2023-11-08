@@ -5,7 +5,7 @@ import { userActions } from "./slice";
 
 
 function* setUserAction(action: PayloadAction<any>) {
-  yield put(userActions[actionTypes.SET_USER_ACTION](action.payload))
+  yield put(userActions[actionTypes.SET_USER_ACTION](action.payload));
 }
 
 export function* userSaga() {

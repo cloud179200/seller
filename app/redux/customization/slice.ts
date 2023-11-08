@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import * as actionTypes from "./actions";
-import _ from "underscore"
+import _ from "underscore";
 
 export interface ICustomizationState {
   isOpen: string[];
@@ -12,24 +12,24 @@ export interface ICustomizationState {
 
 const initialState: ICustomizationState = {
   isOpen: [], // for active default menu
-  fontFamily: `'Quicksand', sans-serif`,
+  fontFamily: "'Quicksand', sans-serif",
   borderRadius: 14,
   calendarView: "month",
   opened: false,
-}
+};
 const customizationSlice = createSlice({
   name: "customization",
   initialState: _.clone(initialState),
   reducers: {
     [actionTypes.RESET_CUSTOMIZATION_REDUCER_ACTION]: (_state) => {
-      _state = _.clone(initialState)
+      _state = _.clone(initialState);
     },
     [actionTypes.MENU_OPEN]: (state, action: PayloadAction<{ id: string }>) => {
       const id = action.payload.id;
-      state.isOpen = [id]
+      state.isOpen = [id];
     },
     [actionTypes.SET_MENU]: (state, action: PayloadAction<{ opened: boolean }>) => {
-      state.opened = action.payload.opened
+      state.opened = action.payload.opened;
     },
     [actionTypes.SET_FONT_FAMILY]: (state, action: PayloadAction<{ fontFamily: string }>) => {
       state.fontFamily = action.payload.fontFamily;

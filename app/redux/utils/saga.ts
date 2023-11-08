@@ -5,15 +5,15 @@ import { utilsActions } from "./slice";
 
 
 function* resetUtils() {
-  yield put(utilsActions[actionTypes.RESET_UTILS_REDUCER_ACTION]())
+  yield put(utilsActions[actionTypes.RESET_UTILS_REDUCER_ACTION]());
 }
 
 function* setLoadingAction(action: PayloadAction<{ state: boolean }>) {
-  yield put(utilsActions[actionTypes.SET_LOADING_ACTION](action.payload))
+  yield put(utilsActions[actionTypes.SET_LOADING_ACTION](action.payload));
 }
 
 function* setLoadingCommonAction(action: PayloadAction<{ state: boolean }>) {
-  yield put(utilsActions[actionTypes.SET_LOADING_COMMON_ACTION](action.payload))
+  yield put(utilsActions[actionTypes.SET_LOADING_COMMON_ACTION](action.payload));
 }
 
 export function* utilsSaga() {

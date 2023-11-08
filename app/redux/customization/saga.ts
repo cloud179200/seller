@@ -5,23 +5,23 @@ import { customizationActions } from "./slice";
 
 
 function* resetCustomization() {
-  yield put(customizationActions[actionTypes.RESET_CUSTOMIZATION_REDUCER_ACTION]())
+  yield put(customizationActions[actionTypes.RESET_CUSTOMIZATION_REDUCER_ACTION]());
 }
 
 function* setMenu(action: PayloadAction<{ opened: boolean }>) {
-  yield put(customizationActions[actionTypes.SET_MENU](action.payload))
+  yield put(customizationActions[actionTypes.SET_MENU](action.payload));
 }
 
 function* openMenu(action: PayloadAction<{ id: string }>) {
-  yield put(customizationActions[actionTypes.MENU_OPEN](action.payload))
+  yield put(customizationActions[actionTypes.MENU_OPEN](action.payload));
 }
 
 function* setFontFamily(action: PayloadAction<{ fontFamily: string }>) {
-  yield put(customizationActions[actionTypes.SET_FONT_FAMILY](action.payload))
+  yield put(customizationActions[actionTypes.SET_FONT_FAMILY](action.payload));
 }
 
 function* setBorderRadiusMenu(action: PayloadAction<{ borderRadius: number }>) {
-  yield put(customizationActions[actionTypes.SET_BORDER_RADIUS](action.payload))
+  yield put(customizationActions[actionTypes.SET_BORDER_RADIUS](action.payload));
 }
 
 export function* customizationSaga() {

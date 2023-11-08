@@ -13,7 +13,8 @@ const config = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || "",
   NODE_ENV: process.env.NODE_ENV,
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY
-}
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET
+};
 
-export default config
+export default config;

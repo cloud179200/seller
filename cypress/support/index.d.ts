@@ -1,4 +1,4 @@
-import './commands';
+import "./commands";
 
 declare global {
   namespace Cypress {
@@ -6,17 +6,17 @@ declare global {
       dataCy: (value: string) => Chainable<Element>;
       // * tasks
       task(
-        event: 'resetLogin',
+        event: "resetLogin",
         arg?: any,
         options?: Partial<Loggable & Timeoutable>
       ): Chainable<any>;
       task(
-        event: 'resetRegister',
+        event: "resetRegister",
         arg?: any,
         options?: Partial<Loggable & Timeoutable>
       ): Chainable<any>,
       task(
-        event: 'resetEmailVerification',
+        event: "resetEmailVerification",
         arg?: any,
         options?: Partial<Loggable & Timeoutable>
       ): Chainable<any>;

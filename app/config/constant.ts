@@ -27,13 +27,13 @@ export const HTTP_RESPONSE_STATUS = {
 };
 
 export const HTTP_REQUEST_METHOD = {
-  GET: 'GET',           // Retrieve data from the server
-  POST: 'POST',         // Send data to the server to create a new resource
-  PUT: 'PUT',           // Update an existing resource on the server
-  DELETE: 'DELETE',     // Delete a resource on the server
-  PATCH: 'PATCH',       // Apply partial modifications to a resource
-  HEAD: 'HEAD',         // Retrieve headers of a resource without the body content
-  OPTIONS: 'OPTIONS',   // Retrieve the supported methods for a resource
+  GET: "GET",           // Retrieve data from the server
+  POST: "POST",         // Send data to the server to create a new resource
+  PUT: "PUT",           // Update an existing resource on the server
+  DELETE: "DELETE",     // Delete a resource on the server
+  PATCH: "PATCH",       // Apply partial modifications to a resource
+  HEAD: "HEAD",         // Retrieve headers of a resource without the body content
+  OPTIONS: "OPTIONS",   // Retrieve the supported methods for a resource
 };
 
 
@@ -216,19 +216,19 @@ export const STATUS_VERIFY_EMAIL = {
 export const gridSpacing = 3;
 export const drawerWidth = 260;
 export const appDrawerWidth = 320;
-export const DEFAULT_BACKGROUND_IMAGE = "linear-gradient(120deg, rgba(200,31,255,1) 0%, rgba(124,77,255,1) 60%, rgba(33,150,243,1) 100%)"
+export const DEFAULT_BACKGROUND_IMAGE = "linear-gradient(120deg, rgba(200,31,255,1) 0%, rgba(124,77,255,1) 60%, rgba(33,150,243,1) 100%)";
 
 export const NEXT_AUTH_STATUS = {
   LOADING: "loading",
   AUTHENTICATED: "authenticated",
   UNAUTHENTICATED: "unauthenticated"
-}
+};
 
 export const BRAND_NAME = {
   GOOGLE: "google"
-}
+};
 
 export const NOTIFICATION_KEYS: { [k: string]: string } = {
   ADVERTING_EMAIL: "ADVERTING_EMAIL",
   PASSWORD_CHANGED: "PASSWORD_CHANGED",
-}
+};

@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer"
+import nodemailer from "nodemailer";
 import config from "@/app/config";
 
 type EmailPayload = {
@@ -16,15 +16,15 @@ const smtpOptions = {
     user: config.SMTP_USER || "user",
     pass: config.SMTP_PASSWORD || "password",
   },
-}
+};
 
 export const sendEmail = async (data: EmailPayload) => {
   const transporter = nodemailer.createTransport({
     ...smtpOptions,
-  })
+  });
 
   return await transporter.sendMail({
     from: config.SMTP_FROM_EMAIL,
     ...data,
-  })
-}
+  });
+};

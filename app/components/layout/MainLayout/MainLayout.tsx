@@ -48,7 +48,7 @@ const MainLayout = (props: { children?: React.ReactNode }) => {
           {isDisplaySidebar && <div>
             <Sidebar open={leftDrawerOpened} />
           </div>}
-          <div className={`w-screen grow bg-base-100 p-4`}>
+          <div className={"w-screen grow bg-base-100 p-4"}>
             {props.children}
           </div>
         </div>

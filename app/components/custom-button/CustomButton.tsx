@@ -9,7 +9,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const CustomButton = ({ children, endIcon, loading, cypressData, ...props }: IProps) => {
   return (
     <button
-      className="btn-info btn-block btn mt-2"
+      className="btn btn-info btn-block mt-2"
       {...props}
       disabled={props.disabled || loading}
       data-cy={cypressData || ""}

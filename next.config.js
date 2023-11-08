@@ -15,7 +15,7 @@ const nextConfig = {
   eslint: {
     dirs: ['./*'],
   },
-  swcMinify: true,
+  swcMinify: false,
   reactStrictMode: false
 };
 

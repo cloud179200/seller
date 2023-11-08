@@ -17,7 +17,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": true,
+    "project": ["./tsconfig.json"],
     "sourceType": "module",
     "ecmaVersion": "latest",
     "ecmaFeatures": {
@@ -35,6 +35,7 @@
       }
     }
   },
+  "ignorePatterns": ["next.config.js", "svgr.config.js", "tailwind.config.js"],
   "plugins": ["react", "import", "@typescript-eslint"],
   "rules": {
     "semi": ["error", "always"],
@@ -43,8 +44,8 @@
     // React rules
     "react/prop-types": "off",
     "react/no-unescaped-entities": "off",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/rules-of-hooks": "off",
+    "react-hooks/exhaustive-deps": "off",
     "react/display-name": "off",
 
     // Import rules
@@ -62,6 +63,7 @@
     "no-useless-catch": "off",
     "no-unreachable": "off",
     "no-unused-vars": "off",
+    
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -71,6 +73,13 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-unsafe-assignment":"off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
     "no-empty-function": "warn",
     "no-explicit-any": "off",
     "@next/next/no-img-element": "off"

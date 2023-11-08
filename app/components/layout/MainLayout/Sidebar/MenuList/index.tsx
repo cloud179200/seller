@@ -32,6 +32,7 @@ function MenuList(props: IProps) {
                 return isMinimal ? (
                     <li key={item.id} className="mt-2">
                         <Link
+              
                             href={item.url}
                             className="tooltip tooltip-right hidden md:block"
                             data-tip={item.title}
@@ -42,7 +43,8 @@ function MenuList(props: IProps) {
                 ) : (
                     <Animate key={item.id} animateWhenInView="slide" animateWhenInViewProps={{ transition: { type:"spring", duration: 0.5 } }}>
                         <li className="mt-2 px-2">
-                            <Link href={item.url} className="ring-2 ring-neutral md:ring-0">
+                            <Link
+               href={item.url} className="ring-2 ring-neutral md:ring-0">
                                 <h4 className="mr-2 w-[64vw] overflow-hidden truncate md:w-[10rem]">
                                     {item.title}
                                 </h4>

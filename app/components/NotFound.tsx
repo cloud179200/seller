@@ -14,7 +14,9 @@ const NotFoundComponent = () => {
         </p>
         <img src={SearchSVG.src} width="100" alt="img" />
         <img src={NotFoundPNG.src} width="300" alt="img" />
-        <Link href="/" className="rounded bg-blue-500 px-4 py-2 font-bold text-accent-content hover:bg-blue-600">
+        <Link href={{
+          pathname: "/"
+        }} className="rounded bg-blue-500 px-4 py-2 font-bold text-accent-content hover:bg-blue-600">
           Go Back
         </Link>
       </div>

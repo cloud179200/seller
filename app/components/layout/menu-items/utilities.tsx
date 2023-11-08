@@ -1,5 +1,5 @@
 // assets
-import { TbTypography, TbPalette, TbShadow, TbWindmill } from 'react-icons/tb';
+import { TbTypography, TbPalette, TbShadow, TbWindmill } from "react-icons/tb";
 
 // constant
 const icons = {
@@ -12,52 +12,52 @@ const icons = {
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
 
 const utilities = {
-    id: 'utilities',
-    title: 'Utilities',
-    type: 'group',
+    id: "utilities",
+    title: "Utilities",
+    type: "group",
     children: [
         {
-            id: 'util-typography',
-            title: 'Typography',
-            type: 'item',
-            url: '/utils/util-typography',
+            id: "util-typography",
+            title: "Typography",
+            type: "item",
+            url: "/utils/util-typography",
             icon: icons.TbTypography,
             breadcrumbs: false
         },
         {
-            id: 'util-color',
-            title: 'Color',
-            type: 'item',
-            url: '/utils/util-color',
+            id: "util-color",
+            title: "Color",
+            type: "item",
+            url: "/utils/util-color",
             icon: icons.TbPalette,
             breadcrumbs: false
         },
         {
-            id: 'util-shadow',
-            title: 'Shadow',
-            type: 'item',
-            url: '/utils/util-shadow',
+            id: "util-shadow",
+            title: "Shadow",
+            type: "item",
+            url: "/utils/util-shadow",
             icon: icons.TbShadow,
             breadcrumbs: false
         },
         {
-            id: 'icons',
-            title: 'Tbs',
-            type: 'collapse',
+            id: "icons",
+            title: "Tbs",
+            type: "collapse",
             icon: icons.TbWindmill,
             children: [
                 {
-                    id: 'tabler-icons',
-                    title: 'Tabler Tbs',
-                    type: 'item',
-                    url: '/icons/tabler-icons',
+                    id: "tabler-icons",
+                    title: "Tabler Tbs",
+                    type: "item",
+                    url: "/icons/tabler-icons",
                     breadcrumbs: false
                 },
                 {
-                    id: 'material-icons',
-                    title: 'Material Tbs',
-                    type: 'item',
-                    url: '/icons/material-icons',
+                    id: "material-icons",
+                    title: "Material Tbs",
+                    type: "item",
+                    url: "/icons/material-icons",
                     breadcrumbs: false
                 }
             ]

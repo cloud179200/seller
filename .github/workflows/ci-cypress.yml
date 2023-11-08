@@ -4,33 +4,13 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
+  # pull_request:
+  #   branches:
+  #     - master
 
 jobs:
-  wait-for-vercel-deployment:
-    runs-on: ubuntu-latest
-    environment:
-      name: CI Process
-    steps:
-      - name: Wait for Vercel Deployment
-        uses: UnlyEd/github-action-await-vercel@v1.2.43
-        id: await-vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        with:
-          deployment-url: seller-cloud179200.vercel.app
-          timeout: 10
-          poll-interval: 1
-
-      - name: Display deployment status
-        run: |
-          echo "The deployment at ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel.outputs.deploymentDetails).readyState }}"
-
-  test:
-    runs-on: ubuntu-latest
-    needs: wait-for-vercel-deployment
+  tests-e2e:
+    runs-on: ubuntu-20.04
     environment:
       name: CI Process
     strategy:
@@ -50,10 +30,23 @@ jobs:
         
       - name: Build Application
         run: npm run build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET: ${{ secrets.SECRET }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
         
       - name: Run E2E tests
         uses: cypress-io/github-action@v6
         with:
+          start: npm start -- -p 3000
           config-file: cypress.config.ts
           install: false
         env:
@@ -68,3 +61,25 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
+  deploy:
+      runs-on: ubuntu-20.04
+      needs: tests-e2e
+      environment:
+        name: CI Process
+      strategy:
+        matrix:
+          node-version: [18.18.x]  
+      steps:
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v4
+          with:
+            node-version: ${{ matrix.node-version }}
+        - uses: actions/checkout@v4
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+        - name: Pull Vercel Environment Information
+          run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Build Project Artifacts
+          run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Deploy Project Artifacts to Vercel
+          run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

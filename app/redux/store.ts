@@ -1,6 +1,6 @@
 import { AnyAction, CombinedState, Reducer, combineReducers, configureStore } from "@reduxjs/toolkit";
 // import createSagaMiddleware from "redux-saga";
-import customizationSlice, { ICustomizationState } from "./customization/slice"
+import customizationSlice, { ICustomizationState } from "./customization/slice";
 import userSlice, { IUserState } from "./user/slice";
 import utilsSlice, { IUtilsState } from "./utils/slice";
 // import { rootSaga } from "./saga";
@@ -33,11 +33,11 @@ export const store = configureStore({
 // sagaMiddleware.run(rootSaga)
 
 
-export const makeStore = () => store
+export const makeStore = () => store;
 
 export type AppStore = ReturnType<typeof makeStore>;
-export type AppState = ReturnType<AppStore['getState']>;
-export type AppDispatch = AppStore['dispatch'];
+export type AppState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<IState> = useSelector;

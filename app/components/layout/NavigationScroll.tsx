@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 // ==============================|| NAVIGATION SCROLL TO TOP ||============================== //
@@ -12,7 +12,7 @@ const NavigationScroll = ({ children }: { children?: React.ReactNode }) => {
         window.scrollTo({
             top: 0,
             left: 0,
-            behavior: 'smooth'
+            behavior: "smooth"
         });
     }, [pathname]);
 

@@ -7,7 +7,12 @@
   "editor.wrappingIndent": "same",
   "editor.wordWrapColumn": 120,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    // For ESLint
+    "source.fixAll.eslint": true,
+    // For TSLint
+    "source.fixAll.tslint": true,
+    // For Stylelint
+    "source.fixAll.stylelint": true
   },
   "eslint.validate": [
     "javascript",
@@ -15,8 +20,6 @@
     "typescript",
     "typescriptreact"
   ],
-  "cSpell.words": [
-    "Roboto"
-  ],
+  "cSpell.words": ["Roboto"],
   "compile-hero.disable-compile-files-on-did-save-code": true
 }

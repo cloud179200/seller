@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as Yup from "yup";
 import { FORM_VALIDATE_ERROR_MESSAGE } from "@/app/config/constant";
 import { parsePhoneNumberWithError } from "libphonenumber-js";
@@ -26,7 +26,7 @@ export const signUpSchema = Yup.object().shape({
     .required(FORM_VALIDATE_ERROR_MESSAGE.REQUIRED),
   date_of_birth: Yup.string().matches(regexPatternDOB, FORM_VALIDATE_ERROR_MESSAGE.INVALID).required(FORM_VALIDATE_ERROR_MESSAGE.REQUIRED),
   phone_number: Yup.string()
-    .test(`phone`, FORM_VALIDATE_ERROR_MESSAGE.INVALID, (value: any) => {
+    .test("phone", FORM_VALIDATE_ERROR_MESSAGE.INVALID, (value: any) => {
       try {
         const val = value || "";
         const phone = parsePhoneNumberWithError(val, "VN");

@@ -41,3 +41,11 @@ model NotificationSettings {
   setting_key   String
   setting_value Boolean
 }
+
+model PaymentLogged {
+  id            String @id @default(cuid()) @map("_id") @db.ObjectId
+  user_id       String
+  create_at     DateTime
+  type          String
+  
+}

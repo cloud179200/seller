@@ -139,16 +139,16 @@ function Payment() {
   const heightCardsContainer = `calc(${68 * 10}px + ${0.5 * 9}rem)`;
   return (
     <div className="grid grid-cols-12 gap-2 p-2">
-      <div
-        className="overflow-overlay col-span-12 md:col-span-6"
+      <CustomBox
+        className={"overflow-overlay col-span-12 shadow-none hover:shadow-none md:col-span-6"}
         style={{ height: heightCardsContainer }}
       >
-        <CustomBox className="p-4 shadow-none hover:shadow-none">
+        <CustomBox className="border-0 p-4 shadow-none hover:shadow-none">
           {listCard.map((cardInfo) => (
             <Card key={cardInfo.cardId} {...cardInfo} />
           ))}
         </CustomBox>
-      </div>
+      </CustomBox>
       <div className="overflow-overlay col-span-12 md:col-span-6"></div>
     </div>
   );
